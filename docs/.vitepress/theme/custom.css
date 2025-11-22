@@ -1,0 +1,9 @@
+@import './styles/img.css';
+@import './styles/nav.css';
+
+
+
+.vp-doc p {
+  margin: 0.3em 20px !important;
+  line-height: 1.4 !important;
+}

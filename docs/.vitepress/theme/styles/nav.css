@@ -1,0 +1,21 @@
+.icon-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 2px -2em 2px 0; 
+  vertical-align: middle;
+}
+
+.icon-nav svg {
+  vertical-align: middle;
+}
+
+.VPNavBarMenuGroup {
+  display: inline-flex !important;
+  align-items: center !important;
+  vertical-align: middle !important;
+}
+.VPNavBarMenuLink{
+  margin: 0 -5px;
+  pointer-events: auto !important;
+}
