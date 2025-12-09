@@ -1,0 +1,31 @@
+/* 图片放大 */
+.medium-zoom-overlay {
+  background-color: var(--vp-c-bg) !important;
+  z-index: 100;
+}
+
+.medium-zoom-overlay ~ img {
+  z-index: 101;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  opacity: 0.9 !important;
+}
+.VPHome .medium-zoom-image{
+  display: block;
+  max-width: 60% !important;
+  max-height: 60% !important;
+  border-radius: 8px;
+}
+._physics_ .medium-zoom-image{
+  display: block;
+  max-width: 20% !important;
+  max-height: 20% !important;
+  border-radius: 8px;
+}
+._math_ .medium-zoom-image{
+  display: block;
+  max-width: 50% !important;
+  max-height: 50% !important;
+  border-radius: 8px;
+}

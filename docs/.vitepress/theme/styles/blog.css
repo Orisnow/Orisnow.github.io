@@ -1,0 +1,24 @@
+/* 正文部分 */
+.vp-doc h1 + p,
+.vp-doc h2 + p,
+.vp-doc h3 + p,
+.vp-doc h4 + p,
+.vp-doc h5 + p,
+.vp-doc h6 + p {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.VPDoc p {
+  text-indent: 2em;
+}
+
+
+/* 引用部分 */
+.small-gray {
+  font-size: 0.75em;
+  color: #6369bb !important;
+}
+.small-gray:hover {
+  color: #9577ff !important; /* 稍微亮一点的悬停颜色 */
+}
