@@ -1,28 +1,39 @@
 import { defineConfig } from 'vitepress'
+import { sharedConfig } from './themeConfig/share'
+import { zhConfig } from './themeConfig/zh'
+import { enConfig } from './themeConfig/en'
+import { jaConfig } from './themeConfig/ja'
+import { katex } from "@mdit/plugin-katex";
 
-// https://vitepress.dev/reference/site-config
+
 export default defineConfig({
   title: "Balson's Garden",
   description: "My Official Website",
-  themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
-    ],
+  markdown: {
+    config(md) {
+      md.use(katex);
+    },
+  },
+  ...sharedConfig,
+  locales: {
+    zh: {
+      label: '中文（简体）',
+      lang: 'zh-CN',
+      link: '/zh/',
+      ...zhConfig,
+    },
+    en: {
+      label: 'English',
+      lang: 'en-US',
+      link: '/en/',
+      ...enConfig,
+    },
+    ja: {
+      label: '日本語',
+      lang: 'ja-JP',
+      link: '/ja/',
+      ...jaConfig,
+    }
+  },
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
 })

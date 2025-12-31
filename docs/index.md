@@ -1,25 +1,23 @@
+<!--coded by debate between gpt and gemini-->
 ---
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
-
-hero:
-  name: "Balson's Garden"
-  text: "My Official Website"
-  tagline: My great project tagline
-  actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+layout: false
 ---
 
+<script setup>
+import { onMounted } from 'vue'
+import { useRouter, withBase } from 'vitepress'
+
+const router = useRouter()
+
+onMounted(() => {
+  try {
+    router.go(withBase('/zh/'))
+  } catch {
+    window.location.replace('./zh/')
+  }
+})
+</script>
+
+<meta http-equiv="refresh" content="0;url=./zh/" />
+
+正在跳转到中文文档…

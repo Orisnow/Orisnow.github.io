@@ -1,0 +1,1 @@
+import{_ as a,c as t,o as e}from"./chunks/framework.D5bZKFX8.js";const h=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"zh/blog/math/gamma.md","filePath":"zh/blog/math/gamma.md"}'),m={name:"zh/blog/math/gamma.md"};function o(r,s,c,n,p,_){return e(),t("div")}const i=a(m,[["render",o]]);export{h as __pageData,i as default};
