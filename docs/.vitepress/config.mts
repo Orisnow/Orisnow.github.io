@@ -6,6 +6,10 @@ import { jaConfig } from './themeConfig/ja'
 import { katex } from "@mdit/plugin-katex";
 
 
+import path from 'path'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+
+
 export default defineConfig({
   title: "Balson's Garden",
   description: "My Official Website",
@@ -36,4 +40,14 @@ export default defineConfig({
     }
   },
 
+  vite: {
+    plugins: [
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), 'docs/public/icons')],
+        symbolId: 'icon-[name]',
+        svgoOptions: true,
+      }),
+    ],
+  }
+  
 })

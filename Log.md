@@ -47,3 +47,18 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ```
 # 2025-12-31
 ## 1、用AI处理了多语言情况下根目录首页会404的问题
+## 2、由于多语言大改了文件结构，就全部add后push了下
+# 2026-1-1
+## 1、添加了origami文件夹（语言目录下）
+## 2、themeConfig里换成了多侧边栏，注意sidebar: []和sidebar: {}的区别
+# 2026-1-12
+## 1、public加videos文件夹，添加showcase文件夹（语言目录下）
+# 2026-1-16
+## 1、新建theme/components/Layout,theme/components/Image.vue和theme/Layout.vue
+# 2026-1-19
+## 1、安装vite-plugin-svg-icons
+# 2026-1-21
+## 1、安装sass-embedded(处理SvgIcon.vue里复制来的<style lang="scss" scoped>)
+## 2、安装vite-plugin-svg-icons所缺失的fast-glob
+## 3、配置vite-plugin-svg-icons(注意iconDirs读取位置),用virtual:svg-icons-register抓svg,注册SvgIcon组件
+## 4、注册ImageGroup组件，基本完成Image.vue
