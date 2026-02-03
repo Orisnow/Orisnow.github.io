@@ -30,7 +30,7 @@ importers:
         specifier: ^4.3.2
         version: 4.3.2
       palette:
-        specifier: github:catppuccin/palette
+        specifier: https://github.com/catppuccin/palette.git
         version: git+https://git@github.com:catppuccin/palette.git#0df7db6fe201b437d91e7288fa22807bb0e44701
       photoswipe:
         specifier: ^5.4.4
