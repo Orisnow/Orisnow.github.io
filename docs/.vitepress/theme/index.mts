@@ -7,7 +7,7 @@ import './custom.css';   // 个性化css
 import 'virtual:svg-icons-register';   // 必须导入该虚拟模块
 import NotFound from './components/Pages/NFPage/404.vue';   //404页面组件
 //组件
-import Image from './components/BLog/Content/Image.vue';
+import Image from './components/Blog/Content/Image.vue';
 import SvgIcon from './components/Tools/SvgIcon.vue';
 import ImageGroup from './components/Blog/Content/ImageGroup.vue';
 import BlogCard from './components/Pages/Portal/BlogCard.vue';
