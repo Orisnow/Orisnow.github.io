@@ -1,13 +1,12 @@
 {
   "devDependencies": {
-    "@catppuccin/palette": "^1.7.1",
     "@mdit/plugin-katex": "^0.24.1",
     "fast-glob": "^3.3.3",
     "katex": "^0.16.27",
     "markdown-it": "^14.1.0",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-mathjax3": "^4.3.2",
-    "palette": "https://github.com/catppuccin/palette.git",
+    "palette": "github:catppuccin/palette",
     "photoswipe": "^5.4.4",
     "sass-embedded": "^1.97.2",
     "vite-plugin-svg-icons": "^2.0.1",
