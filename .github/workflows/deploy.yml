@@ -30,6 +30,10 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - name: Force git to use HTTPS instead of SSH
+        run: |
+         git config --global url."https://github.com/".insteadOf git@github.com:
+
       - name: Install dependencies
         run: pnpm install
 
