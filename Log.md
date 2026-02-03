@@ -62,3 +62,35 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 2、安装vite-plugin-svg-icons所缺失的fast-glob
 ## 3、配置vite-plugin-svg-icons(注意iconDirs读取位置),用virtual:svg-icons-register抓svg,注册SvgIcon组件
 ## 4、注册ImageGroup组件，基本完成Image.vue
+# 2026-1-26
+## 1、把ts后缀都改成mts，把vue组件的<script>加上lang="ts",并处理隐式any等问题
+## 2、新建404.vue，在index.mts中用h函数自定义404页面
+# 2026-1-29
+## 1、在blog下添加computer和essays文件夹，设置nav
+## 2、在zh/essays/test.md起草第一篇blog
+## 3、在share.mts里配置logo,启用搜索，禁用大纲和底部上下文链接（感觉官方的lastUpdated有点怪就没弄）
+# 2026-1-30
+## 1、知道了既是下拉菜单又是超链接的nav内容栏可能不是一个好设计（对于移动端用户），可以认为nav里的下拉栏其实是不适合分类的，适合那种“外部链接：链接1；链接2……"这种比较直接的内容
+# 2026-1-31
+## 1、整理theme/components,新建custom/color.css作为颜色库，安装并导入catppuccin/palette
+# 2026-2-1
+## 1、简单编写了下CategoryCard.vue,BlogCard.vue,Portal.vue和blog/index.md
+# 2026-2-2
+## 1、解耦用组件不必全局注册，故index.mts里能删的组件都删了
+## 2、觉得CategorytCard和博客首页的BlogCard应有明显的区分，于是打算新建个PortalHero并放入CategorytCard
+# 2026-2-3
+## 1、在gemini的帮助下写了下zh_blog.data.ts，发现如果不加export const data = [] as any;就会发生import { data as ZH_BLOG_DATA }略 vscode报错但网站正常运行而import data 略 vscode不报错但网站直接白掉的诡异情况（ts特有的到处都是any问题）
+## 2、把Portal的主干功能大致编写完，新建Archives文件夹
+## 3、传github测试
+
+
+
+
+
+
+
+
+
+# 待办
+## [[2026-1-21]]传到个人网站上试了下，第一次进站图片加载挺慢的，不全加载完甚至不能放大，手机和surface这种触屏设备还要特化一下（信息栏触摸后就一直挂着了，不点其他地方下不去）
+## [[2026-1-30]]考虑到数学、物理、计算机、杂谈作为博客下的一级分类特点肯定是不适合原本vitepress的sidebar竖向的分类方式的（说到分类是不是可以添加一个让访客选择”根据标签“、”根据修改时间“之类的复选框？），在sidebar横向菜单的方式可能会好些但是又感觉会很拥挤，或者考虑在左侧做成像笔记本的书签夹那样（用颜色区分），但是我需要侧边栏折叠功能（像reddit那样的），又怕会有点击冲突问题，而且我还要预留出左下角的位置给2dlive人物，同时负责语言切换，明暗切换等功能（到时候navbar的相关功能则会去掉）。大纲我是不想直接显示的（要弄 的话也是可折叠的），因此右边会有较多空位，在右下角我想放几个工具按钮，比如设置，回到顶部，回到上一页这种，还有个我设想的切换阅读模式用的(参考obsidian)，默认是link mode,对于部分关键词设置内链组件显示有色高亮可以直接点击跳转，hover时则会在右边的空白处存在预览，切换后是read mode，则不会高亮，跳转和预览。额，暂时就想到这些，也不知道具体操作的可行性

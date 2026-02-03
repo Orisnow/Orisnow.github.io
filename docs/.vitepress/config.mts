@@ -1,13 +1,13 @@
-import { defineConfig } from 'vitepress'
-import { sharedConfig } from './themeConfig/share'
-import { zhConfig } from './themeConfig/zh'
-import { enConfig } from './themeConfig/en'
-import { jaConfig } from './themeConfig/ja'
+import { defineConfig } from 'vitepress';
+import { sharedConfig } from './themeConfig/share.mts';
+import { zhConfig } from './themeConfig/zh.mts';
+import { enConfig } from './themeConfig/en.mts';
+import { jaConfig } from './themeConfig/ja.mts';
 import { katex } from "@mdit/plugin-katex";
 
 
-import path from 'path'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import path from 'path';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
 
 export default defineConfig({

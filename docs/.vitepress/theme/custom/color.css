@@ -1,0 +1,11 @@
+@import "@catppuccin/palette/css/catppuccin.css";
+
+/* 全站基础色 */
+:where(:root) {
+    --garden-lavender: var(--ctp-latte-lavender);
+
+
+/* 一些有趣的色号 */
+    --arcaea-camellia: #1f1e33;
+}
+

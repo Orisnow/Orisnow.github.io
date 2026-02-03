@@ -4,8 +4,8 @@
   </div>
 </template>
 
-<script setup>
-import { provide, useId } from 'vue'
+<script setup lang="ts">
+import { provide, useId } from 'vue';
 
 const galleryId = `gallery-${useId()}`
 
@@ -13,7 +13,7 @@ const galleryId = `gallery-${useId()}`
 provide('pswp-gallery', `[data-gallery="${galleryId}"]`)
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .image-group {
   display: grid;
   gap: 12px;

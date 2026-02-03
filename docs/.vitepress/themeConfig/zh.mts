@@ -6,15 +6,9 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
     themeConfig: {
       nav: [
         { text: '主页', link: '/zh/' },
-        { text: '博客', 
-          items: [
-            {text: '数学', link: '/zh/blog/math'},
-            {text: '物理', link: '/zh/blog/physics'},
-          ]
-        },
+        { text: '博客', link: '/zh/blog/'},
         { text: '折纸', link: '/zh/origami'},
         { text: '展示', link: '/zh/showcase'},
-
       ],
 
       sidebar: {
@@ -31,6 +25,22 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
               link: '/zh/blog/physics/',
               items: [
                 {text: '麦克斯韦方程组', link: '/zh/blog/physics/maxwell-equatioan'}
+              ]
+            },
+        ],
+        '/zh/blog/computer/': [
+            { text: '计算机',
+              link: '/zh/blog/computer/',
+              items: [
+                {text: '生命游戏', link: '/zh/blog/computer/game-of-life'}
+              ]
+            },
+        ],
+        '/zh/blog/essays/': [
+            { text: '杂谈',
+              link: '/zh/blog/essays/',
+              items: [
+                {text: '测试', link: '/zh/blog/essays/test'}
               ]
             },
         ],

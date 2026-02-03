@@ -1,6 +1,6 @@
 <!--主要参考Linux.do,经由gpt、gemini、ds、photoswipe官方文档与博客综合编写-->
 <template>
-  <div class="lightbox-wrapper" dir="auto" :id="!injectedGallery ? selfGalleryId : null">
+  <div class="lightbox-wrapper" dir="auto" :id="!injectedGallery ? selfGalleryId : undefined">
     <a 
       class="lightbox" 
       :href="src" 
@@ -13,9 +13,9 @@
         :src="src" 
         :width="width" 
         :height="height"
-      >
+      />
       <div class="meta">
-        <SvgIcon name="icon-image01" size="20px" />
+        <SvgIcon name="image01" size="20px" />
         <span class="filename" :title="ImageName">{{ DisplayFileName }}</span>
         <span class="information">{{ width }}×{{ height }} {{ filesize }}</span>
       </div>
@@ -23,37 +23,46 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, onUnmounted, useId, inject } from 'vue'
-import PhotoSwipeLightbox from 'photoswipe/lightbox'
-import 'photoswipe/style.css'
-import SvgIcon from '../SvgIcon.vue'
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, useId, inject } from 'vue';
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import 'photoswipe/style.css';
+import SvgIcon from '../../Tools/SvgIcon.vue';
+import { useData } from 'vitepress';
 
-const props = defineProps({ 
-  src: String,
-  width: { type: Number,  }, 
-  height: { type: Number,  },
-  filesize: { type: String,  },
-})
-// 自动从路径提取文件名
+const { lang } = useData()
+// 1. 定义接口
+interface Props {
+  src: string,
+  width: number,
+  height: number,
+  filesize?: string, // 可选
+}
+
+const props = defineProps<Props>()
+// 用URL API自动从路径提取文件名
 const ImageName = computed(() => {
-  if (!props.src) return 'image';
-  return props.src.split('/').pop().split('?')[0];
+  try {
+    const pathname: string = new URL(props.src, location.origin).pathname
+    return decodeURIComponent(pathname.split('/').at(-1) ?? 'image')
+  } catch {
+    return 'image'
+  }
 })
 // 最大允许显示的文件名长度（不含后缀）
-const MAX_FILENAME_LENGTH = 20
+const MAX_FILENAME_LENGTH: number = 20
 const DisplayFileName = computed(() => {
-  if (!props.src) return 'image'
-  const fullName = props.src.split('/').pop().split('?')[0]
+  const fullName: string = ImageName.value // 直接使用 ImageName
   if (!fullName) return 'image'
   // 去掉后缀
-  const nameWithoutExt = fullName.replace(/\.[^/.]+$/, '')
+  const nameWithoutExt: string = fullName.replace(/\.[^/.]+$/, '')
   // 过长则兜底
   if (nameWithoutExt.length > MAX_FILENAME_LENGTH) {
     return 'image'
   }
   return nameWithoutExt
 })
+
 //判断单图还是图片组
 const injectedGallery = inject('pswp-gallery', null)
 const selfGalleryId = `image-${useId()}`
@@ -92,21 +101,20 @@ const PSWP_I18N = {
     prev: '前へ',
     next: '次へ',
   }
-};
+} as const;
 
-let lightbox = null;
+let lightbox: PhotoSwipeLightbox | null = null;
 const ImageId = useId();
 // 初始化 PhotoSwipe 插件
 onMounted(() => {
-  //获取当前语言
-  const htmlLang = document.documentElement.lang?.slice(0, 2) || 'en';
-  const t = PSWP_I18N[htmlLang] || PSWP_I18N.en;
- 
+  //获取当前语言并确保类型是正确的
+  const currentLang = (lang.value?.slice(0, 2) || 'en') as keyof typeof PSWP_I18N;
+  const t = PSWP_I18N[currentLang] || PSWP_I18N.en;
+
   lightbox = new PhotoSwipeLightbox({
     gallery: gallerySelector.value,
     children: 'a',
     closeOnVerticalDrag: true,
-    closeOnScroll: true,
     showHideAnimationType: 'zoom',
     pswpModule: () => import('photoswipe'), 
     wheelToZoom: true,
@@ -118,8 +126,12 @@ onMounted(() => {
     arrowNextTitle: t.next,
   });
 //添加下载功能，参考https://photoswipe.com/adding-ui-elements/ #Adding Download Button
-  lightbox.on('uiRegister', function() {
-    lightbox.pswp.ui.registerElement({
+  lightbox.on('uiRegister', () => {
+    // 1. 解决 lightbox.pswp 可能为 undefined 的问题
+    // 使用可选链和类型守卫
+    const pswpInstance = lightbox?.pswp;
+    if (pswpInstance?.ui) {
+      pswpInstance.ui.registerElement({
       name: 'download-button',
       order: 8,
       isButton: true,
@@ -139,18 +151,24 @@ onMounted(() => {
       // html: '<i class="fa-solid fa-download"></i>' 
 
       onInit: (el, pswp) => {
-        el.setAttribute('download', '');
-        el.setAttribute('target', '_blank');
-        el.setAttribute('rel', 'noopener');
-        //注入下载按钮的多语言翻译
-        el.setAttribute('title', t.download);
+        const downloadEl = el as HTMLAnchorElement;
 
-        pswp.on('change', () => {
-          console.log('change');
-          el.href = pswp.currSlide.data.src;
-        });
+      downloadEl.setAttribute('download', '');
+      downloadEl.setAttribute('target', '_blank');
+      downloadEl.setAttribute('rel', 'noopener');
+      downloadEl.setAttribute('title', t.download);
+
+      // 3. 解决 pswp.currSlide 可能未定义的问题
+      pswp.on('change', () => {
+        // 使用可选链获取 src，并提供空字符串作为兜底
+        const currentSrc = pswp.currSlide?.data.src;
+        if (currentSrc) {
+          downloadEl.href = currentSrc;
+        }
+      });
       }
     });
+   }
   });
   lightbox.init();
 
@@ -166,7 +184,7 @@ onUnmounted(() => {
 
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 /* 容器设置为相对定位，方便 meta 定位 */
 .lightbox {
   position: relative;
