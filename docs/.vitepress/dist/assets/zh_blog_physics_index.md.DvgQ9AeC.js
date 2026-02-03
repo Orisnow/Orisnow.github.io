@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as s}from"./chunks/framework.CPAVvx_Q.js";const h=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"zh/blog/physics/index.md","filePath":"zh/blog/physics/index.md"}'),a={name:"zh/blog/physics/index.md"};function o(n,c,r,i,d,p){return s(),t("div")}const l=e(a,[["render",o]]);export{h as __pageData,l as default};

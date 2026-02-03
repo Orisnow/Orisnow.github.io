@@ -1,0 +1,1 @@
+import{_ as e,c as s,o as t}from"./chunks/framework.CPAVvx_Q.js";const l=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en/blog/essays/index.md","filePath":"en/blog/essays/index.md"}'),a={name:"en/blog/essays/index.md"};function n(o,r,c,d,i,p){return t(),s("div")}const m=e(a,[["render",n]]);export{l as __pageData,m as default};

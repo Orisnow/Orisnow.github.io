@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a}from"./chunks/framework.CPAVvx_Q.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en/blog/math/index.md","filePath":"en/blog/math/index.md"}'),n={name:"en/blog/math/index.md"};function o(r,s,c,d,i,m){return a(),t("div")}const l=e(n,[["render",o]]);export{_ as __pageData,l as default};

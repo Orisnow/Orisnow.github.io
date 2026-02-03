@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@catppuccin/palette": "^1.7.1",
     "@mdit/plugin-katex": "^0.24.1",
     "fast-glob": "^3.3.3",
     "katex": "^0.16.27",
