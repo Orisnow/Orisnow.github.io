@@ -1,3 +1,5 @@
+import "./chunk-BUSYA2B4.js";
+
 // node_modules/.pnpm/photoswipe@5.4.4/node_modules/photoswipe/dist/photoswipe-lightbox.esm.js
 function createElement(className, tagName, appendToEl) {
   const el = document.createElement(tagName);

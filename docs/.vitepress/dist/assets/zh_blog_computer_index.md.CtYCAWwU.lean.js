@@ -1,1 +1,0 @@
-import{_ as e,c as t,o}from"./chunks/framework.CPAVvx_Q.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"zh/blog/computer/index.md","filePath":"zh/blog/computer/index.md"}'),r={name:"zh/blog/computer/index.md"};function a(n,c,s,d,i,p){return o(),t("div")}const l=e(r,[["render",a]]);export{_ as __pageData,l as default};

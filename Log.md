@@ -81,7 +81,26 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 # 2026-2-3
 ## 1、在gemini的帮助下写了下zh_blog.data.ts，发现如果不加export const data = [] as any;就会发生import { data as ZH_BLOG_DATA }略 vscode报错但网站正常运行而import data 略 vscode不报错但网站直接白掉的诡异情况（ts特有的到处都是any问题）
 ## 2、把Portal的主干功能大致编写完，新建Archives文件夹
-## 3、传github测试
+## 3、传github测试，发现有catppuccin/palette相关的问题，在deploy.yml里加git config --global url."https://github.com/".insteadOf git@github.com:解决，以及发现改正了index.mts里import组件的大小写问题
+# 2026-2-4
+## 1、建立i18n_dict.mts用于存放不同组件中用到的多语言字典，用useI18n.mts统一处理它与data文件夹中不同语言的.data.ts，把Portal.vue改成多语言的
+## 2、梳理文件夹结构，确立components/Pages的主体地位，负责自定义layout的构建，其余组件按照功能分配结构，styles负责存放自定义css并由custom.css进行汇总，其中的color.css作为网站的颜色库，data文件夹负责构建时数据的收集，并在utils进行多语言加工和其他处理，en,ja,zh为多语言网页的编写，public负责资源的存放
+# 2026-2-5
+## 1、安装markdown-it、gray-matter、vite、buffer,新建.vitepress/end.d.ts
+## 2、更新了下pnpm,清理多余低版本的同名包
+## 3、为了高度自定义搞了一堆乱七八糟的，重点在于在MyLayout里置空官方的<Layout />使得布局完全自定义
+# 2026-2-6
+## 1、卸载markdown-it,回归正规军<Content />
+## 2、搞好mdTohtml里用于获取（本地）图片数据的image_processor.mts和用于将markdown语法的图片转换为Image组件的renderer.mts（重点在于把md会自动生成的外层<p>转换为<div>）
+## 3、把Image和ImageGroup重命名为ShowImage和Gallery并移动到ShowCase文件夹，把Image保留并拆解一部分到BlogPort，使得单页面有同一GalleryId，可自动分为一组
+
+
+
+
+
+
+
+
 
 
 

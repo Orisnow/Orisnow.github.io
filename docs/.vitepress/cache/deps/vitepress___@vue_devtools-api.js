@@ -1,3 +1,5 @@
+import "./chunk-BUSYA2B4.js";
+
 // node_modules/.pnpm/@vue+devtools-shared@8.0.5/node_modules/@vue/devtools-shared/dist/index.js
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -861,7 +863,6 @@ function toRaw$1(observed) {
   const raw = observed && observed[ReactiveFlags.RAW];
   return raw ? toRaw$1(raw) : observed;
 }
-var Fragment = Symbol.for("v-fgt");
 var StateEditor = class {
   constructor() {
     this.refEditor = new RefStateEditor();

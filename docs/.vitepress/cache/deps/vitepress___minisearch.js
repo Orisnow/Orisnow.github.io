@@ -1,3 +1,5 @@
+import "./chunk-BUSYA2B4.js";
+
 // node_modules/.pnpm/minisearch@7.2.0/node_modules/minisearch/dist/es/index.js
 var ENTRIES = "ENTRIES";
 var KEYS = "KEYS";
@@ -1693,7 +1695,7 @@ var MiniSearch = class _MiniSearch {
     }
   }
 };
-MiniSearch.wildcard = Symbol("*");
+MiniSearch.wildcard = /* @__PURE__ */ Symbol("*");
 var getOwnProperty = (object, property) => Object.prototype.hasOwnProperty.call(object, property) ? object[property] : void 0;
 var combinators = {
   [OR]: (a, b) => {

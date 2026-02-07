@@ -1,0 +1,14 @@
+/* 声明更纱黑体SC */
+@font-face {
+  font-family: 'SarasaGothicSC-SemiBold';
+  src: url('/fonts/SarasaGothicSC-SemiBold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+}
+
+
+:root {
+  --font-sans: "SarasaGothicSC-SemiBold", 
+                sans-serif;
+}
+

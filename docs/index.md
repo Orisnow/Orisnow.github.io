@@ -5,17 +5,20 @@ layout: false
 
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter, withBase } from 'vitepress'
-
-const router = useRouter()
+import { withBase } from 'vitepress'
 
 onMounted(() => {
-  try {
-    router.go(withBase('/zh/'))
-  } catch {
-    window.location.replace('./zh/')
+  // 检查当前路径，如果已经是 /zh/ 或 /en/，则停止重定向
+  const path = window.location.pathname
+  const hasLang = /^\/(zh|en|ja)\//.test(path)
+
+  if (!hasLang) {
+    // 使用绝对路径重定向，确保不会叠加
+    window.location.replace(withBase('/zh/'))
   }
 })
 </script>
 
-<meta http-equiv="refresh" content="0;url=./zh/" />
+<noscript>
+  <meta http-equiv="refresh" content="0;url=./zh/" />
+</noscript>

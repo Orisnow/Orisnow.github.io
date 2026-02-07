@@ -38,7 +38,7 @@ export default createContentLoader('zh/blog/**/*.md', {
         abstract: frontmatter.abstract || frontmatter.description || '暂无摘要',
         tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
         cover: frontmatter.cover,
-        category: url.split('/')[3] || 'other',
+        category: url.split('/')[3] || '无',
         recommend: frontmatter.recommend,
       };
     })

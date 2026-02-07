@@ -1,9 +1,27 @@
-        { text: 'ブログ', 
-          items: [
-            {text: 'ポータル', link: '/ja/blog/portal'},
-            {text: '数学', link: '/ja/blog/math'},
-            {text: '物理', link: '/ja/blog/physics'},
-            {text: 'コンピューター', link: '/ja/blog/computer'},
-            {text: '雑記', link: '/ja/blog/essays'},
-          ]
-        },
+---
+layout: portal
+categories:
+  -
+    id: math
+    title: 数学
+    content: 数学のブログ
+    href: math/
+    
+  -
+    id: physics
+    title: 物理
+    content: 物理のブログ
+    href: physics/
+    icon: atom
+    src: https://ghproxy.net/https://raw.githubusercontent.com/Orisnow/Images/refs/heads/main/test/5170096.jpg
+  -
+    id: computer
+    title: コンピューター
+    content: コンピューターのブログ
+    href: computer/
+  -
+    id: essays
+    title: 雑記
+    content: 雑記のブログ
+    href: essays/
+---

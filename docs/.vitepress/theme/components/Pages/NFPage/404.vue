@@ -22,7 +22,7 @@
         <h1>under construction</h1>
         <p>You have arrived in a desolate wilderness</p>
         <a href="/en">Go Home</a>
-    </NotFoundContent>
+      </NotFoundContent>
     </template>
     
   </div>

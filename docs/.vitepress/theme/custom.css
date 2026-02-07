@@ -1,8 +1,0 @@
-@import 'katex/dist/katex.css';
-@import './custom/fonts.css';
-@import './custom/color.css';
-
-body {
-  font-family: var(--font-sans);
-}
-

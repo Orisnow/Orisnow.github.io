@@ -2,8 +2,18 @@
 
 ```bash
 git add .
-git commit -m "Fix the issue of case sensitivity"
+git commit -m "Test Blog Sidebar and Sarasa Font"
 git push  
 <!-- 直接push容易有连接问题，可以通过SSH key解决 -->
 ```
 :::
+::: 在github里直接修改文件后要做的
+```bash
+git pull origin main --rebase
+git push origin main
+```
+:::
+
+
+
+

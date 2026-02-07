@@ -1,20 +1,29 @@
 {
+  "pnpm": {
+    "overrides": {
+      "vite": "$vite"
+    }
+  },
   "devDependencies": {
     "@catppuccin/palette": "^1.7.1",
     "@mdit/plugin-katex": "^0.24.1",
+    "@types/markdown-it": "^14.1.2",
+    "buffer": "^6.0.3",
     "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "image-size": "^2.0.2",
     "katex": "^0.16.27",
-    "markdown-it": "^14.1.0",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-mathjax3": "^4.3.2",
     "palette": "github:catppuccin/palette",
     "photoswipe": "^5.4.4",
     "sass-embedded": "^1.97.2",
+    "vite": "^7.3.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitepress": "2.0.0-alpha.15",
     "vue": "^3.5.25"
   },
-  "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501",
+  "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

@@ -4,8 +4,8 @@
       <PortalHero/>
     </section>
     <section class="recommended-blogs">
-      <h2>推荐阅读</h2>
-      <button @click="goToArchives('recommend')">查看更多</button>
+      <h2>{{ t.recommended }}</h2>
+      <button @click="goToArchives('recommend')">{{ t.more }}</button>
       <div class="blog-grid">
         <BlogCard 
           v-for="recommended_blogs in recommendedBlogs" 
@@ -15,8 +15,8 @@
       </div>
     </section>
     <section class="latest-blogs">
-      <h2>最近更新</h2>
-      <button @click="goToArchives('latest')">查看更多</button>
+      <h2>{{ t.latest }}</h2>
+      <button @click="goToArchives('latest')">{{ t.more }}</button>
       <div class="blog-grid">
         <BlogCard 
           v-for="new_blogs in latestBlogs" 
@@ -33,24 +33,29 @@
 import { computed } from 'vue';
 import PortalHero from './PortalHero.vue';
 import BlogCard from './BlogCard.vue';
-import { data as ZH_BLOG_DATA } from '../../../data/zh_blog.data';
-import { useNavigation } from '../../../utils/i18n_path.mts'
+import { useI18n } from '../../../utils/i18n/useI18n.mts';
+import { useNavigation } from '../../../utils/i18n/i18n_path.mts'
 
 const { goToArchives } = useNavigation()
+const { t, blogData } = useI18n('Portal')
+
 const latestBlogs = computed(() => {
-  return ZH_BLOG_DATA.slice(0, 6)
-})
+  // blogData 是个 Ref，所以要写 .value
+  return blogData.value.slice(0, 6);
+});
+
 const recommendedBlogs = computed(() => {
-  return [...ZH_BLOG_DATA] // 使用 [...] 展开运算符创建一个副本，避免影响原数组
-    .filter(post => post.recommend) // 只要推荐的
+  return [...blogData.value] 
+    .filter(post => post.recommend)
     .sort((a, b) => {
-      // 这里的逻辑只影响推荐板块：权重大的在前
       const weightA = Number(a.recommend);
       const weightB = Number(b.recommend);
       return weightB - weightA; 
     })
-    .slice(0, 3) // 只要前3个高权重的
-})
+    .slice(0, 3);
+});
+
+
 </script>
 
 <style lang="css" scoped>

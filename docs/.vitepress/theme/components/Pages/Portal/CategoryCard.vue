@@ -20,7 +20,7 @@ import { withBase } from 'vitepress';
 interface Props {
     href: string,
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 </script>
 
