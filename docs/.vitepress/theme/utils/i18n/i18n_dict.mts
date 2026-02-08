@@ -20,5 +20,11 @@ export const i18n_dict = {
     zh: { date: '最后修改日期'},
     en: { date: '最后修改日期'},
     ja: { date: '最后修改日期'},
-  }
+  },
+  MyNavbar: {
+    zh: { title: '一风园', home: '主页', blog: '博客', origami: '折纸', showcase: '展示'},
+    en: { title: "Balson's Garden", home: 'Home', blog: 'Blog', origami: 'Origami', showcase: 'Showcase'},
+    ja: { title: 'ほのにわ', home: 'ホーム', blog: 'ブログ', origami: '折り紙', showcase: '作品'},
+  },
+
 } as const

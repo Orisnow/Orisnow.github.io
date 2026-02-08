@@ -27,8 +27,7 @@ tags:
 
 
 ![Kanae](/images/Kanae.png)
-这是一段文字，在其他内容分隔的情况下依然要能成组
-$\nabla\cdot (A\hat{\rho}+B\hat{\theta}+C\hat{\varphi})=\frac{1}{\rho^{2}} \frac{\partial}{\partial\rho}(\rho^{2}A)+\frac{1}{\rho\sin\theta} \frac{\partial}{\partial\theta}(\sin\theta B)+\frac{1}{\rho\sin\theta} \frac{\partial}{\partial\varphi}(C)$公式倒能正常显示呢
 ![MHWI86](/images/MHWI86.png)
+
 
 

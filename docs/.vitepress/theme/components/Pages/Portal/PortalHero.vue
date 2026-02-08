@@ -3,23 +3,34 @@
     <h1>欢迎来到博客首页</h1>
     <section class="category-cards">
         <CategoryCard
-        v-for="item in frontmatter.categories"
-        :key="item.id"
-        :id="item.id"
-        :href="item.href"
+          v-for="item in frontmatter.categories"
+          :key="item.id"
+          :href="item.href"
         >
+          <template #category-card-icon>
+            <SvgIcon :name="item.icon" size="24px"/>
+          </template>
+
           <template #category-card-title>{{ item.title }}</template>
+
           <template #category-card-content>{{ item.content }}</template>
+
           <template #category-card-image>
-            <SvgIcon :name="item.icon"/>
-            <img :src="item.src"/>
+            <img :src="item.src" />
           </template>
         </CategoryCard>
     </section>
-    <button type="button" class="hero-slide-down-button">
-        <SvgIcon name="hero-side-down" size="50px"/>
-        <SvgIcon name="hero-side-down" size="40px"/>
-    </button>
+    <button 
+    type="button" 
+    class="hero-slide-down-button" 
+    @click="slideDown"
+    aria-label="Slide Down"
+  >
+    <div class="arrow-wrapper">
+      <SvgIcon name="hero-side-down" size="30px"/>
+      <SvgIcon name="hero-side-down" size="40px" class="second-arrow"/>
+    </div>
+  </button>
 
   </header>
 </template>
@@ -82,30 +93,59 @@ const slideDown = () => {
   letter-spacing: -1px;
 }
 
-/* 卡片容器：这里沿用你的 Grid，加一个宽度限制 */
+/* 修改卡片容器 */
 .category-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  width: 90%;
-  max-width: 1000px;
+  /* 重点：将 200px 改为至少 350px - 450px，否则左右排不下 */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+  gap: 1.5rem;
+  width: 95%;
+  max-width: 1200px;
+  margin-top: 1rem;
+}
+
+/* 标题样式微调 */
+.portal-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem); /* 响应式字号 */
+  z-index: 2;
+  /* 确保标题在上面，不被遮挡 */
 }
 
 /* 底部下滑按钮 */
 .hero-slide-down-button {
   position: absolute;
   bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%); /* 确保按钮在正中间 */
   background: transparent;
   border: none;
   cursor: pointer;
-  animation: bounce 2s infinite; /* 跳动动画 */
-  color: #333;
+  z-index: 10; /* 提高层级，确保能点到 */
+  color: #ffffff;
+  transition: opacity 0.3s;
+}
+
+.hero-slide-down-button:hover {
+  opacity: 0.7;
+}
+
+/* 箭头容器 */
+.arrow-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounce 2s infinite; /* 把动画加在这里，整个容器一起跳 */
+}
+
+/* 让第二个箭头稍微往上靠，形成双箭头感 */
+.second-arrow {
+  margin-top: -25px; 
 }
 
 /* 简单的跳动动画 */
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-  40% {transform: translateY(-10px);}
-  60% {transform: translateY(-5px);}
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
 }
 </style>

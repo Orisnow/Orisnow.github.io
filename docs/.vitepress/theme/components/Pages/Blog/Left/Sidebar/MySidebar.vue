@@ -1,22 +1,27 @@
 <template>
-  <aside class="sidebar-before-area">
-    <div class="sidebar-catalog"
-         v-for="catalogKey in catalogKeys" 
-        :key="catalogKey"
-    >
-      <a class="catalog-title " 
-      :href="withBase(`/${langKey}/blog/${catalogKey}/`)"
-      >
-        {{ (t as any)[catalogKey] }}
-      </a>
-      <div class="catalog-list">
+  <aside class="sidebar-wrapper">
+    <nav class="catalog-tabs">
+      <div v-for="catalogKey in catalogKeys" :key="catalogKey" class="tab-item">
+        <a class="catalog-title" 
+           :class="{ 'is-active': catalogKey === currentCategory }"
+           :href="withBase(`/${langKey}/blog/${catalogKey}/`)"
+        >
+          {{ (t as any)[catalogKey] }}
+        </a>
+      </div>
+    </nav>
+
+    <main class="catalog-panel">
+      <div v-if="currentCategory && sortedCatalogData[currentCategory]" class="panel-content">
         <ol>
-          <li v-for="post in sortedCatalogData[catalogKey]" :key="post.href">
-            <a :href="withBase(post.href)">{{ post.title }}</a>
+          <li v-for="post in sortedCatalogData[currentCategory]" :key="post.href">
+            <a :href="withBase(post.href)" :class="{ 'active-link': page.relativePath === post.href }">
+              {{ post.title }}
+            </a>
           </li>
         </ol>
       </div>
-    </div>
+    </main>
   </aside>
 </template>
 
@@ -77,66 +82,123 @@ const currentCategory = computed(() => {
 </script>
 
 <style lang="css" scoped>
-.sidebar-before-area {
-  padding: 24px 0;
+/* 1. 基础容器：撑满左侧区域 */
+.sidebar-wrapper {
+  display: flex;
+  height: 100%; /* 关键：撑满父容器 */
+  padding: 15px 0 15px 10px;
+  box-sizing: border-box;
+}
+
+/* 2. 左侧导航列：设为 Flex 纵向平分 */
+.catalog-tabs {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  height: 100%; /* 撑满高度 */
+  width: 40px;  /* 给个固定宽度 */
+  z-index: 10;
+  /* 移除 gap，让它们贴合在一起平分空间 */
+  gap: 0; 
 }
 
-.sidebar-catalog {
+.tab-item {
+  flex: 1; /* 核心：四个分类平分 100% 的高度 */
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: column;
 }
 
-.catalog-title:lang(zh) {
-  /* 竖排文字 */
+/* 3. 标题样式优化 */
+.catalog-title {
+  flex: 1; /* 填充整个 tab-item */
+  display: flex;
+  align-items: center;     /* 竖排文字水平居中 */
+  justify-content: center;  /* 竖排文字垂直居中 */
   writing-mode: vertical-lr;
-  text-orientation: mixed;
-  padding: 12px 6px;
-  background-color: var(--vp-c-bg-soft);
-  border-radius: 4px;
-  font-weight: 600;
+  padding: 0 6px;
   font-size: 14px;
-  color: var(--vp-c-text-1);
-  text-decoration: none;
-  transition: all 0.2s;
-  border-right: 2px solid transparent;
-}
-
-.catalog-title:lang(en-US) {
-  writing-mode: sideways-lr;
-}
-
-.catalog-title:hover {
-  color: var(--vp-c-brand);
-  background-color: var(--vp-c-default-soft);
-}
-
-/* 可以在这里控制显示隐藏逻辑 */
-.catalog-list {
-  font-size: 13px;
-  max-width: 150px;
-}
-
-.catalog-list ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.catalog-list li {
-  margin-bottom: 4px;
-  white-space: nowrap;
-}
-
-.catalog-list a {
+  font-weight: 600;
   color: var(--vp-c-text-2);
   text-decoration: none;
+  background-color: var(--vp-c-bg-alt);
+  border: 1px solid var(--vp-c-divider);
+  /* 调整圆角：只保留最上方和最下方的圆角，中间的保持直角更像整体 */
+  border-bottom: none; 
+  transition: all 0.25s ease;
+  position: relative;
 }
 
-.catalog-list a:hover {
+/* 第一个和最后一个圆角处理，让整体像一个长条 */
+.tab-item:first-child .catalog-title { border-radius: 12px 0 0 0; }
+.tab-item:last-child .catalog-title { 
+  border-radius: 0 0 0 12px; 
+  border-bottom: 1px solid var(--vp-c-divider); 
+}
+
+/* 多语言设置保持不变 */
+.catalog-title:lang(zh), .catalog-title:lang(ja) { text-orientation: mixed; }
+.catalog-title:lang(en) { text-orientation: upright; letter-spacing: -1px; }
+
+/* 4. 吸附状态：Hover 或 Active */
+.catalog-title:hover,
+.catalog-title.is-active {
+  background-color: var(--vp-c-bg-soft) !important;
   color: var(--vp-c-brand);
+  margin-right: -1px; /* 向右吃掉面板边框 */
+  z-index: 5;
+  /* 吸附时去掉所有左侧圆角，使其完全嵌入面板 */
+  border-radius: 0 !important; 
+  border-right-color: transparent;
+}
+
+/* --- 动态凹角补丁的通用样式 --- */
+.catalog-title:hover::before, .catalog-title.is-active::before,
+.catalog-title:hover::after, .catalog-title.is-active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  z-index: 20; /* 确保在最上层 */
+}
+
+/* 1. 处理上方的凹角 (::before) */
+.catalog-title:hover::before, .catalog-title.is-active::before {
+  top: -15px;
+  border-radius: 0 0 15px 0;
+  box-shadow: 5px 5px 0 0 var(--vp-c-bg-soft);
+}
+
+/* 【关键修复】如果是第一个分类，它上面没有空间，不需要向上的凹角 */
+.tab-item:first-child .catalog-title::before {
+  display: none !important;
+}
+
+/* 2. 处理下方的凹角 (::after) */
+.catalog-title:hover::after, .catalog-title.is-active::after {
+  bottom: -15px;
+  border-radius: 0 15px 0 0;
+  box-shadow: 5px -5px 0 0 var(--vp-c-bg-soft);
+}
+
+/* 【关键修复】如果是最后一个分类 (essays)，它下面没有空间，不需要向下的凹角 */
+.tab-item:last-child .catalog-title::after {
+  display: none !important;
+}
+
+/* 6. 右侧大面板 */
+.catalog-panel {
+  flex: 1;
+  height: 100%;
+  background-color: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0 12px 12px 0; /* 右侧圆角 */
+  overflow: hidden;
+}
+
+.panel-content {
+  padding: 24px 18px;
+  height: 100%;
+  overflow-y: auto;
 }
 </style>

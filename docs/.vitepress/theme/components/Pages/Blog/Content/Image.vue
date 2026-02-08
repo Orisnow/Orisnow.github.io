@@ -19,14 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, useId, inject } from 'vue';
-import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import { computed } from 'vue';
 import 'photoswipe/style.css';
 import SvgIcon from '../../../Tools/SvgIcon.vue';
-import { useData } from 'vitepress';
 
 
-const { lang } = useData()
 // 1. 定义接口
 interface Props {
   src: string,

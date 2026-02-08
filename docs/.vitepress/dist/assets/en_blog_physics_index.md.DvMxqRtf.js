@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as n}from"./chunks/framework.C_P68k9R.js";const l=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en/blog/physics/index.md","filePath":"en/blog/physics/index.md"}'),s={name:"en/blog/physics/index.md"};function a(o,c,r,i,d,p){return n(),t("div")}const m=e(s,[["render",a]]);export{l as __pageData,m as default};

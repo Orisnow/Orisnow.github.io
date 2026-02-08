@@ -1,8 +1,5 @@
 import { defineConfig } from 'vitepress';
-import { sharedConfig } from './themeConfig/share.mts';
-import { zhConfig } from './themeConfig/zh.mts';
-import { enConfig } from './themeConfig/en.mts';
-import { jaConfig } from './themeConfig/ja.mts';
+import { sharedConfig } from './share.mts';
 import { katex } from "@mdit/plugin-katex";
 
 
@@ -22,24 +19,9 @@ export default defineConfig({
   },
   ...sharedConfig,
   locales: {
-    zh: {
-      label: '中文（简体）',
-      lang: 'zh-CN',
-      link: '/zh/',
-      ...zhConfig,
-    },
-    en: {
-      label: 'English',
-      lang: 'en-US',
-      link: '/en/',
-      ...enConfig,
-    },
-    ja: {
-      label: '日本語',
-      lang: 'ja-JP',
-      link: '/ja/',
-      ...jaConfig,
-    }
+    zh: { label: '中文（简体）', lang: 'zh-CN', link: '/zh/'},
+    en: { label: 'English', lang: 'en-US', link: '/en/'},
+    ja: { label: '日本語', lang: 'ja-JP', link: '/ja/'},
   },
 
   vite: {

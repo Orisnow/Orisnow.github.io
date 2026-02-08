@@ -93,10 +93,14 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 1、卸载markdown-it,回归正规军<Content />
 ## 2、搞好mdTohtml里用于获取（本地）图片数据的image_processor.mts和用于将markdown语法的图片转换为Image组件的renderer.mts（重点在于把md会自动生成的外层<p>转换为<div>）
 ## 3、把Image和ImageGroup重命名为ShowImage和Gallery并移动到ShowCase文件夹，把Image保留并拆解一部分到BlogPort，使得单页面有同一GalleryId，可自动分为一组
-
-
-
-
+# 2026-2-7
+## 1、换一个正常能用的字体
+## 2、使得MySidebar能用（发现英文竖排版的问题很棘手）
+## 3、删除themeConfig文件夹，迁移内容至i18n_dict.mts,保留share.mts
+# 2026-2-8
+## 1、修了修博客界面的版面
+## 2、使得MyNavbar能用
+## 3、让gemini随便写了点能看的css，传github测试
 
 
 
@@ -113,3 +117,4 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 # 待办
 ## [[2026-1-21]]传到个人网站上试了下，第一次进站图片加载挺慢的，不全加载完甚至不能放大，手机和surface这种触屏设备还要特化一下（信息栏触摸后就一直挂着了，不点其他地方下不去）
 ## [[2026-1-30]]考虑到数学、物理、计算机、杂谈作为博客下的一级分类特点肯定是不适合原本vitepress的sidebar竖向的分类方式的（说到分类是不是可以添加一个让访客选择”根据标签“、”根据修改时间“之类的复选框？），在sidebar横向菜单的方式可能会好些但是又感觉会很拥挤，或者考虑在左侧做成像笔记本的书签夹那样（用颜色区分），但是我需要侧边栏折叠功能（像reddit那样的），又怕会有点击冲突问题，而且我还要预留出左下角的位置给2dlive人物，同时负责语言切换，明暗切换等功能（到时候navbar的相关功能则会去掉）。大纲我是不想直接显示的（要弄 的话也是可折叠的），因此右边会有较多空位，在右下角我想放几个工具按钮，比如设置，回到顶部，回到上一页这种，还有个我设想的切换阅读模式用的(参考obsidian)，默认是link mode,对于部分关键词设置内链组件显示有色高亮可以直接点击跳转，hover时则会在右边的空白处存在预览，切换后是read mode，则不会高亮，跳转和预览。额，暂时就想到这些，也不知道具体操作的可行性
+## [[2026-2-8]]语言切换会回到页面顶部

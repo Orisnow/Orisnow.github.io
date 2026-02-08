@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a}from"./chunks/framework.C_P68k9R.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en/origami/index.md","filePath":"en/origami/index.md"}'),n={name:"en/origami/index.md"};function r(i,o,s,c,d,m){return a(),t("div")}const f=e(n,[["render",r]]);export{_ as __pageData,f as default};
