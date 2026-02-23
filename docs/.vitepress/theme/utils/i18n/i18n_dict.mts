@@ -1,4 +1,6 @@
 import BlogTop from "../../components/Pages/Blog/Content/BlogTop.vue";
+import Portal from "../../components/Pages/Portal/Portal.vue";
+import PortalHero from "../../components/Pages/Portal/PortalHero.vue";
 
 export const i18n_dict = {
   Portal: {
@@ -6,9 +8,14 @@ export const i18n_dict = {
     en: { recommended: 'Recommended', latest: 'Latest Updates', more: 'View More' },
     ja: { recommended: 'おすすめ', latest: '最新投稿', more: 'もっと見る' }
   },
-  MySidebarBefore: {
+  PortalHero: {
+    zh: { h1: '欢迎来到博客首页',},
+    en: { h1: 'Welcome to the blog homepage',},
+    ja: { h1: 'ブログのトップページへようこそ',},
+  },
+  MySidebar: {
     zh: { title: '目录索引', math: '数学', physics: '物理', computer: '计算机', essays: '杂谈' },
-    en: { title: 'Catalog', math: 'Math', physics: 'Physics', computer: 'Computer', essays: 'Essays' },
+    en: { title: 'Catalog', math: 'MATH', physics: 'PHYSICS', computer: 'COMPUTER', essays: 'ESSAYS' },
     ja: { title: '目録', math: '数学', physics: '物理', computer: 'コンピュータ', essays: '随筆' }
   },
   BlogPost: {

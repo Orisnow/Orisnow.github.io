@@ -3,15 +3,14 @@
 
   <div v-else class="app-container">
     <MyNavbar />
-
+  
     <main class="main-stage">
       <Home v-if="routeInfo.type === 'home'" />
+      <Blog v-else-if="routeInfo.type === 'blog'" />
       <Origami v-else-if="routeInfo.type === 'origami'" />
       <Showcase v-else-if="routeInfo.type === 'showcase'" />
-      
       <Portal v-else-if="routeInfo.type === 'portal'" />
       <Archives v-else-if="routeInfo.type === 'archives'" />
-      <Blog v-else-if="routeInfo.type === 'blog'" />
       
       <Layout v-else />
     </main>
@@ -66,32 +65,16 @@ const routeInfo = computed(() => {
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  /* 确保这里没有 overflow-x: hidden 以外的限制 */
-}
 
-.navbar {
-  /* 维持 sticky，但确保它在最上层 */
-  position: sticky; 
-  top: 0;
-  z-index: 1000;
-  flex-shrink: 0;
-  width: 100%;
+  min-height: 100%;
+  min-width: 0;
 }
 
 .main-stage {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  /* 这里的 align-items: center 负责让内容在水平方向上居中 */
-  align-items: center; 
-  width: 100%;
+  min-width: 0;
+  flex: 1;
 }
 
-/* 核心：确保 main-stage 的子元素（如 Blog.vue）
-   既能居中，又能撑开宽度，且不破坏父级的滚动 */
-.main-stage > * {
-  width: 100%;
-  max-width: 100%; /* 防止溢出 */
-}
 </style>

@@ -1,5 +1,8 @@
 <template>
   <main class="blog-page">
+    <div class="top-area">
+      <Menubar />
+    </div>
     <div class="left-area">
       <section class="left-sidebar-aera">
         <MySidebar />
@@ -46,6 +49,7 @@ import BlogPost from './Content/BlogPost.vue';
 import BlogTop from './Content/BlogTop.vue';
 import MySidebar from './Left/Sidebar/MySidebar.vue';
 import FixedTool from './Right/Bottom/FixedTool.vue';
+import Menubar from './Top/Menubar.vue';
 
 const { page } = useData();
 
@@ -71,6 +75,12 @@ const isCategoryPage = computed(() => {
   min-height: 100vh;
   gap: 0;
   align-items: start;
+}
+
+.top-area {
+  z-index: 90;
+  position: sticky;
+  top:var(--navbar-height)
 }
 
 /* 2. 左右通用 Sticky 容器 */
@@ -159,5 +169,11 @@ const isCategoryPage = computed(() => {
   .middle-area {
     padding: 20px;
   }
+}
+
+@media (min-width: 960px) {
+  .top-area{
+    display: none;
+  } 
 }
 </style>

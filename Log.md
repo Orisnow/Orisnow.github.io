@@ -97,10 +97,20 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 1、换一个正常能用的字体
 ## 2、使得MySidebar能用（发现英文竖排版的问题很棘手）
 ## 3、删除themeConfig文件夹，迁移内容至i18n_dict.mts,保留share.mts
+## 4、想了下中日英的招牌名
 # 2026-2-8
 ## 1、修了修博客界面的版面
 ## 2、使得MyNavbar能用
 ## 3、让gemini随便写了点能看的css，传github测试
+# 2026-2-17
+ ## 1、删掉style.css,改名custom.css为base.css,使得所有单一组件中的标签、类、id style都在当前组件中完成，其他css都由单独的css文件完成，base集合这些css并作全局控制
+# 2026-2-19
+## 1、瞎删改了些原来ai写的css（css咋这么难）
+# 2026-2-21
+## 1、安装three.js和stats.js,新建components/Three/RigidBodyLinkPoint.vue、utils/Three/useThreeCamera.mts和utils/Stats/useStats.mts进行测试
+# 2026-2-22
+## 1、安装mathbox,但是先不用，three.js也先不用（内容太太太多）
+
 
 
 

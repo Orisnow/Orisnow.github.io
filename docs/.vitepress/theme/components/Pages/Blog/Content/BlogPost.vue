@@ -149,15 +149,10 @@ onUnmounted(() => {
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
   margin: 2rem auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   cursor: zoom-in; /* 提示用户可以点击放大 */
   transition: transform 0.3s ease;
-}
-
-.markdown-body :deep(img:hover) {
-  transform: scale(1.01);
 }
 
 

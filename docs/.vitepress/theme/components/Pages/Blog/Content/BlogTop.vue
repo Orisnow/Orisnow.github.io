@@ -11,6 +11,9 @@
         <span class="date-label">{{ t.date }}: </span>
         <time>{{ displayDate }}</time>
       </div>
+      <div class="blog-version">
+        <span>{{ blogVersion }}</span>
+      </div>
     </div>
     <div class="divider"></div>
   </div>
@@ -35,6 +38,7 @@ const displayDate = computed(() => {
   return '-----';
 });
 
+const blogVersion = frontmatter.value.version || 'v0.0.0';
 
 </script>
 
@@ -64,6 +68,10 @@ const displayDate = computed(() => {
 
 .tag-item {
   color: var(--vp-c-brand-1);
+}
+
+.blog-version {
+  font-size: 0.7rem;
 }
 
 .divider {

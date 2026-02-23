@@ -31,7 +31,7 @@ import { computed } from 'vue';
 import { useI18n } from '../../../../../utils/i18n/useI18n.mts';
 
 const { page } = useData();
-const { t, blogData, langKey } = useI18n('MySidebarBefore');
+const { t, blogData, langKey } = useI18n('MySidebar');
 const catalogKeys = ['math', 'physics', 'computer', 'essays'] as const;
 
 const sortedCatalogData = computed(() => {
@@ -86,7 +86,6 @@ const currentCategory = computed(() => {
 .sidebar-wrapper {
   display: flex;
   height: 100%; /* 关键：撑满父容器 */
-  padding: 15px 0 15px 10px;
   box-sizing: border-box;
 }
 
@@ -192,7 +191,6 @@ const currentCategory = computed(() => {
   height: 100%;
   background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
-  border-radius: 0 12px 12px 0; /* 右侧圆角 */
   overflow: hidden;
 }
 

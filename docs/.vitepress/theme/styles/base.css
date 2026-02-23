@@ -1,0 +1,48 @@
+@import 'katex/dist/katex.css';
+@import './fonts.css';
+@import './color.css';
+@import './layout.css';
+
+/* 全局样式重置 */
+html {
+    box-sizing: border-box;  
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;  /* 响应式图片 */
+}
+
+ul, ol {
+  list-style: none;  /* 默认去掉点 */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;   /* 链接继承文本颜色 */
+}
+
+button, input, textarea, select {
+  font: inherit;     /* 保证表单控件字体统一 */
+  background: none;
+  border: none;
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+

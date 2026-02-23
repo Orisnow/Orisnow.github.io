@@ -1,6 +1,6 @@
 <template>
   <div class="portal-layout">
-    <section class="portal-hero">
+    <section class="portal-hero hero-fullscreen">
       <PortalHero/>
     </section>
     <section class="recommended-blogs">
@@ -25,7 +25,9 @@
         />
       </div>
     </section>
-
+    <section class="portal-footer">
+      <PortalFooter />
+    </section>
   </div>
 </template>
 
@@ -35,12 +37,12 @@ import PortalHero from './PortalHero.vue';
 import BlogCard from './BlogCard.vue';
 import { useI18n } from '../../../utils/i18n/useI18n.mts';
 import { useNavigation } from '../../../utils/i18n/i18n_path.mts'
+import PortalFooter from './PortalFooter.vue';
 
 const { goToArchives } = useNavigation()
 const { t, blogData } = useI18n('Portal')
 
 const latestBlogs = computed(() => {
-  // blogData 是个 Ref，所以要写 .value
   return blogData.value.slice(0, 6);
 });
 
@@ -59,12 +61,31 @@ const recommendedBlogs = computed(() => {
 </script>
 
 <style lang="css" scoped>
+.portal-layout {
+  display: grid;
+  gap: 2rem;
+}
+
+.portal-hero {
+  display: flex;
+}
+
+.hero-fullscreen {
+  height: calc(100vh - var(--navbar-height));
+  width: 100%;
+}
+
 .blog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recommended-blogs, .latest-blogs {
+  margin: 0 3rem;
+}
+
+.portal-footer {
+  height: 5rem;
+  margin: 0 5rem;
 }
 </style>

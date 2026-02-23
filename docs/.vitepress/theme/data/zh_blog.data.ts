@@ -43,7 +43,11 @@ export default createContentLoader('zh/blog/**/*.md', {
       };
     })
     // 根据最后编辑日期排序
-    .sort((a, b) => new Date(b.displayDate).getTime() - new Date(a.displayDate).getTime());
+    .sort((a, b) => {
+      const timeA = a.displayDate ? new Date(a.displayDate).getTime() : 0;
+      const timeB = b.displayDate ? new Date(b.displayDate).getTime() : 0;
+      return timeB - timeA; // 降序：最新的在前，没日期的垫底
+    });
   }
 });
 

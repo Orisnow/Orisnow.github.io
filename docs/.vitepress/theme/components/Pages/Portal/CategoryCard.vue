@@ -32,6 +32,8 @@ const props = defineProps<Props>();
 </script>
 
 <style lang="css" scoped>
+
+/* ai写的 */
 .category-card-link {
   display: flex;
   text-decoration: none;
@@ -91,7 +93,7 @@ const props = defineProps<Props>();
 
 /* 右侧图片区域 */
 .category-card-image {
-  width: 140px; /* 设定图片部分的宽度 */
+  width: 1.5rem; /* 设定图片部分的宽度 */
   flex-shrink: 0;
   border-left: 1px solid var(--vp-c-divider);
 }

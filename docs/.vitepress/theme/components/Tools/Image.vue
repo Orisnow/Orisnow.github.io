@@ -1,4 +1,3 @@
-<!--主要参考Linux.do,经由gpt、gemini、ds、photoswipe官方文档与博客综合编写-->
 <template>
   <div class="lightbox-wrapper">
     <a 
@@ -21,7 +20,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import 'photoswipe/style.css';
-import SvgIcon from '../../../Tools/SvgIcon.vue';
+import SvgIcon from './SvgIcon.vue';
 
 
 // 1. 定义接口

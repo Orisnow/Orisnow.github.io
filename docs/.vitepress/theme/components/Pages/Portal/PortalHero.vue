@@ -1,6 +1,6 @@
 <template>
-  <header class="portal-hero hero-fullscreen" style="background-image: url(https://ghproxy.net/https://raw.githubusercontent.com/Orisnow/Images/refs/heads/main/black.png);">
-    <h1>欢迎来到博客首页</h1>
+  <header class="hero">
+    <h1>{{ t.h1 }}</h1>
     <section class="category-cards">
         <CategoryCard
           v-for="item in frontmatter.categories"
@@ -12,9 +12,7 @@
           </template>
 
           <template #category-card-title>{{ item.title }}</template>
-
           <template #category-card-content>{{ item.content }}</template>
-
           <template #category-card-image>
             <img :src="item.src" />
           </template>
@@ -39,8 +37,9 @@
 import { useData } from 'vitepress';
 import CategoryCard from './CategoryCard.vue';
 import SvgIcon from '../../Tools/SvgIcon.vue';
+import { useI18n } from '../../../utils/i18n/useI18n.mts';
 
-
+const { t } = useI18n('PortalHero')
 const { frontmatter } = useData()
 
 const slideDown = () => {
@@ -52,69 +51,34 @@ const slideDown = () => {
 </script>
 
 <style lang="css" scoped>
-/* 全屏容器：使用 vh 确保占满屏幕 */
-.portal-hero {
-  height: calc(100vh - var(--vp-nav-height)); 
-  position: relative;
-  width: 100%;
+.hero {
   display: flex;
   flex-direction: column;
+  position: relative;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  
-  /* 背景图优化 */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url(https://ghproxy.net/https://raw.githubusercontent.com/Orisnow/Images/refs/heads/main/test/5395969.jpg)
+              no-repeat rgba(111, 66, 121, 0.475);
+  background-blend-mode: multiply;
 }
 
-/* 遮罩层：防止背景图干扰文字读取 */
-.portal-hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(255, 255, 255, 0.2); /* 浅色遮罩，如果你走深色系可以改黑色 */
-  backdrop-filter: blur(4px); /* 毛玻璃效果 */
-  z-index: 1;
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 400;
+  padding-bottom: 3rem;
 }
 
-/* 确保内容在遮罩之上 */
-.portal-hero > * {
-  position: relative;
-  z-index: 2;
-}
-
-/* 标题样式 */
-.portal-hero h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  letter-spacing: -1px;
-}
-
-/* 修改卡片容器 */
 .category-cards {
-  display: grid;
-  /* 重点：将 200px 改为至少 350px - 450px，否则左右排不下 */
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
-  gap: 1.5rem;
-  width: 95%;
-  max-width: 1200px;
-  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
 }
 
-/* 标题样式微调 */
-.portal-hero h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem); /* 响应式字号 */
-  z-index: 2;
-  /* 确保标题在上面，不被遮挡 */
-}
-
-/* 底部下滑按钮 */
+/* ai写的，底部下滑按钮 */
 .hero-slide-down-button {
   position: absolute;
-  bottom: 30px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%); /* 确保按钮在正中间 */
   background: transparent;
