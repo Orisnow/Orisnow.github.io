@@ -42,15 +42,6 @@ export default defineConfig({
       // 这里是关键：我们稍后会在入口手动引入 Buffer 并挂载到 window
       'Buffer': 'window.Buffer', 
     },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'fancyapps-ui': ['@fancyapps/ui'] //单独拆包防止chunk过大
-          }
-        }
-      }
-    },
   }
   
 })
