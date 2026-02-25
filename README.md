@@ -2,7 +2,7 @@
 
 ```bash
 git add .
-git commit -m "Test for replacing the FancyBox image viewer"
+git commit -m "Test for Fixing bug of the Replacement"
 git push  
 <!-- 直接push容易有连接问题，可以通过SSH key解决 -->
 ```

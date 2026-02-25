@@ -1,5 +1,4 @@
 // Fancybox靠Fancybox.bind绑定，用ref不利于成组,利用:data-fancybox="gallery"绑定
-import { Fancybox } from "@fancyapps/ui";
 import { useData } from "vitepress";
 
 // 多语言字典保持不变
@@ -11,8 +10,11 @@ const PSWP_I18N = {
 
 export const useFancybox = () => {
   const { lang } = useData();
-  const bind = (galleryName: string) => {
-    if (!galleryName) return;
+  const bind = async (galleryName: string) => {
+    if (!galleryName || typeof window === 'undefined') return; // 确保在浏览器环境
+    // 2. 动态加载，避免 SSR 报错
+    const { Fancybox } = await import("@fancyapps/ui");
+
     const selector = `[data-fancybox="${galleryName}"]`;
     const currentLang = (lang.value?.slice(0, 2) || 'en') as keyof typeof PSWP_I18N;
     const t = PSWP_I18N[currentLang] || PSWP_I18N.en;
@@ -32,7 +34,9 @@ export const useFancybox = () => {
     Fancybox.bind(selector, config);
   };
 
-  const unbind = (galleryName: string) => {
+  const unbind = async (galleryName: string) => {
+    if (typeof window === 'undefined') return;
+    const { Fancybox } = await import("@fancyapps/ui");
     Fancybox.unbind(`[data-fancybox="${galleryName}"]`);
   };
 
