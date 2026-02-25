@@ -1,4 +1,5 @@
 @import 'katex/dist/katex.css';
+@import "./fancybox.css";
 @import './fonts.css';
 @import './color.css';
 @import './layout.css';

@@ -1,7 +1,3 @@
-import BlogTop from "../../components/Pages/Blog/Content/BlogTop.vue";
-import Portal from "../../components/Pages/Portal/Portal.vue";
-import PortalHero from "../../components/Pages/Portal/PortalHero.vue";
-
 export const i18n_dict = {
   Portal: {
     zh: { recommended: '推荐阅读', latest: '最近更新', more: '查看更多' },

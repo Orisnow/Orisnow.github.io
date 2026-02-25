@@ -1,13 +1,16 @@
 <template>
-  <div class="lightbox-wrapper">
-    <a 
-      class="lightbox" 
-      :href="src" 
-      :data-pswp-width="pswpWidth"
-      :data-pswp-height="pswpHeight"
-      :data-pswp-filesize="filesize"
+  <div class="fancybox-wrapper">
+    <a
+    class="fancybox"
+     :href="ActualHref"
+     :data-fancybox="gallery"
     >
-      <img loading="lazy" :alt="ImageName" :src="src" :width="width" :height="height" />
+      <img loading="lazy"
+        :alt="ImageName"
+        :src="src" 
+        :width="width" 
+        :height="height"
+      />
       <div class="meta">
         <SvgIcon name="image01" size="20px" />
         <span class="filename" :title="ImageName">{{ DisplayFileName }}</span>
@@ -18,21 +21,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import 'photoswipe/style.css';
-import SvgIcon from './SvgIcon.vue';
+import { ref, computed, onMounted, onUnmounted, onUpdated, useId,  } from "vue";
+import SvgIcon from "./SvgIcon.vue";
+import { useData } from "vitepress";
+import { useFancybox } from "../../utils/Fancybox/useFancybox.mts";
 
+const { lang } = useData()
+const { bind, unbind } = useFancybox();
 
-// 1. 定义接口
 interface Props {
+  href?: string,
   src: string,
   alt?: string,
-  width: number,
-  height: number,
+  width?: number,
+  height?: number,
   filesize?: string, 
+  gallery?: string,
+  fancyboxOptions?: Record<string, any>,
 }
+const props = withDefaults(defineProps<Props>(),{
+  gallery: 'default-gallery',
 
-const props = defineProps<Props>()
+})
+// 无href则使用src
+const ActualHref = computed(() => {
+  return props.href || props.src;
+});
 // 用URL API自动从路径提取文件名
 const ImageName = computed(() => {
   try {
@@ -55,31 +69,30 @@ const DisplayFileName = computed(() => {
   }
   return nameWithoutExt
 })
-//虚报 pswp 尺寸使得zoom图标与功能一直存在
-const MIN_PSWP_SIZE = 1600
-const pswpWidth = computed(() =>
-  Math.max(props.width, MIN_PSWP_SIZE)
-)
-const pswpHeight = computed(() =>
-  Math.round(pswpWidth.value * props.height / props.width)
-)
 
 
-
-
+onMounted(() => {
+    bind(props.gallery);
+});
+onUpdated(() => {
+     unbind(props.gallery);
+     bind(props.gallery);
+});
+onUnmounted(() => {
+    unbind(props.gallery);
+});
 </script>
 
 <style lang="css" scoped>
 /* 容器设置为相对定位，方便 meta 定位 */
-.lightbox {
+.fancybox {
   position: relative;
   display: inline-block; /* 保持容器与图片大小一致 */
   overflow: hidden;      /* 确保 meta 不会超出图片范围 */
 }
 
-.lightbox img {
+.fancybox img {
   display: block;        /* 消除图片下方间隙 */
-  transition: opacity 0.3s ease;
 }
 
 /* 底部信息栏基础样式 */
@@ -111,7 +124,7 @@ const pswpHeight = computed(() =>
 }
 
 /* 悬停状态：显示并滑入 */
-.lightbox:hover .meta {
+.fancybox:hover .meta {
   opacity: 1;
   transform: translateY(0);
 }

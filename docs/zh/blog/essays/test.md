@@ -26,8 +26,7 @@ tags:
 
 
 
-![Kanae](/images/Kanae.png)
-![MHWI86](/images/MHWI86.png)
+
 
 
 

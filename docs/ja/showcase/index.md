@@ -1,0 +1,1 @@
+<ShowImage href="/images/Kanae.png" src="/images/Kanae.png" width="296" height="256" filesize="74.9 KB" gallery="sass"/>

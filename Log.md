@@ -110,7 +110,10 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 1、安装three.js和stats.js,新建components/Three/RigidBodyLinkPoint.vue、utils/Three/useThreeCamera.mts和utils/Stats/useStats.mts进行测试
 # 2026-2-22
 ## 1、安装mathbox,但是先不用，three.js也先不用（内容太太太多）
-
+# 2026-2-24
+## 1、卸载photoswipe,安装fancybox
+# 2026-2-25
+## 1、重新在Image.vue配置好基本的fancybox，新建utils/Fancybox/useFancybox.mts，相应地修改renderer.mts，新建ImageGroup文件夹用于存放不同的图片组样式，传github测试
 
 
 
@@ -127,4 +130,4 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 # 待办
 ## [[2026-1-21]]传到个人网站上试了下，第一次进站图片加载挺慢的，不全加载完甚至不能放大，手机和surface这种触屏设备还要特化一下（信息栏触摸后就一直挂着了，不点其他地方下不去）
 ## [[2026-1-30]]考虑到数学、物理、计算机、杂谈作为博客下的一级分类特点肯定是不适合原本vitepress的sidebar竖向的分类方式的（说到分类是不是可以添加一个让访客选择”根据标签“、”根据修改时间“之类的复选框？），在sidebar横向菜单的方式可能会好些但是又感觉会很拥挤，或者考虑在左侧做成像笔记本的书签夹那样（用颜色区分），但是我需要侧边栏折叠功能（像reddit那样的），又怕会有点击冲突问题，而且我还要预留出左下角的位置给2dlive人物，同时负责语言切换，明暗切换等功能（到时候navbar的相关功能则会去掉）。大纲我是不想直接显示的（要弄 的话也是可折叠的），因此右边会有较多空位，在右下角我想放几个工具按钮，比如设置，回到顶部，回到上一页这种，还有个我设想的切换阅读模式用的(参考obsidian)，默认是link mode,对于部分关键词设置内链组件显示有色高亮可以直接点击跳转，hover时则会在右边的空白处存在预览，切换后是read mode，则不会高亮，跳转和预览。额，暂时就想到这些，也不知道具体操作的可行性
-## [[2026-2-8]]语言切换会回到页面顶部
+## [[2026-2-25]]用UI Hijacking模拟图片大小组切换

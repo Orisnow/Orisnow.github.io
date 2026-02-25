@@ -1,0 +1,8 @@
+@import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
+/* 你的自定义按钮置灰逻辑 */
+.f-button .btn-iterate-group .is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}

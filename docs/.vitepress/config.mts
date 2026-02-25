@@ -5,7 +5,8 @@ import { katex } from "@mdit/plugin-katex";
 
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { setupImageRenderer } from './theme/utils/mdTohtml/renderer.mts';
+import { setupImageRenderer, setupWhisperRenderer } from './theme/utils/mdTohtml/renderer.mts';
+
 
 export default defineConfig({
   title: "Balson's Garden",
@@ -15,6 +16,7 @@ export default defineConfig({
     config(md) {
       md.use(katex);
       setupImageRenderer(md);
+      setupWhisperRenderer(md);
     },
   },
   ...sharedConfig,

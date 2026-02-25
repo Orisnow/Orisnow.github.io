@@ -21,6 +21,9 @@ importers:
       '@catppuccin/palette':
         specifier: ^1.7.1
         version: 1.7.1
+      '@fancyapps/ui':
+        specifier: ^6.1.12
+        version: 6.1.12
       '@mdit/plugin-katex':
         specifier: ^0.24.1
         version: 0.24.1(markdown-it@14.1.0)
@@ -57,9 +60,6 @@ importers:
       palette:
         specifier: github:catppuccin/palette
         version: git+https://git@github.com:catppuccin/palette.git#0df7db6fe201b437d91e7288fa22807bb0e44701
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
       sass-embedded:
         specifier: ^1.97.2
         version: 1.97.2
@@ -268,6 +268,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fancyapps/ui@6.1.12':
+    resolution: {integrity: sha512-uEXC4T972Un+/7nZdx65Ec3iHvG8FsLRGQrVNOnBc4XsvldAw5lMl2kLJStmJjKry3QepjAM6X5kGSqjM7DYIA==}
 
   '@iconify-json/simple-icons@1.2.63':
     resolution: {integrity: sha512-xZl2UWCwE58VlqZ+pDPmaUhE2tq8MVSTJRr4/9nzzHlDdjJ0Ud1VxNXPrwTSgESKY29iCQw3S0r2nJTSNNngHw==}
@@ -1710,10 +1713,6 @@ packages:
   perfect-debounce@2.0.0:
     resolution: {integrity: sha512-fkEH/OBiKrqqI/yIgjR92lMfs2K8105zt/VT6+7eTjNwisrsh47CeIED9z58zI7DfKdH3uHAn25ziRZn3kgAow==}
 
-  photoswipe@5.4.4:
-    resolution: {integrity: sha512-WNFHoKrkZNnvFFhbHL93WDkW3ifwVOXSW3w1UuZZelSmgXpIGiZSNlZJq37rR8YejqME2rHs9EhH9ZvlvFH2NA==}
-    engines: {node: '>= 0.12.0'}
-
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -2500,6 +2499,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.2':
     optional: true
+
+  '@fancyapps/ui@6.1.12': {}
 
   '@iconify-json/simple-icons@1.2.63':
     dependencies:
@@ -4024,8 +4025,6 @@ snapshots:
   pathe@0.2.0: {}
 
   perfect-debounce@2.0.0: {}
-
-  photoswipe@5.4.4: {}
 
   picocolors@1.1.1: {}
 

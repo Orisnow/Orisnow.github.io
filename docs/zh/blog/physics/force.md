@@ -1,6 +1,7 @@
 ---
 title: 力
 dates: [2026-02-16,]
+version: v0.0.1
 cover: https://ghproxy.net/https://raw.githubusercontent.com/Orisnow/Images/refs/heads/main/sana/%E6%89%AB%E6%8F%8F%E5%9B%BE.jpg
 abstract: 随便写点对力的理解
 recommend: 3
