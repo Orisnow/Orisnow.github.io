@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress';
 import { computed } from 'vue';
-import BlogIntro from './BlogIntro/BlogIntro.vue';
+import BlogIntro from './Content/BlogIntro.vue';
 import BlogBottom from './Content/BlogBottom.vue';
 import BlogPost from './Content/BlogPost.vue';
 import BlogTop from './Content/BlogTop.vue';
@@ -65,13 +65,7 @@ const isCategoryPage = computed(() => {
 /* 1. 布局大容器 */
 .blog-page {
   display: grid;
-  /* 修正后的轨道：左右固定，中间自适应但有一个上限 */
-  /* 使用 1fr 配合中间容器的 max-width 容易导致右侧视觉过宽 */
-  grid-template-columns: 260px minmax(0, 1fr) 240px;
-  
-  /* 如果你希望中间内容更稳固，可以尝试： */
-  /* grid-template-columns: 260px auto 240px; 配合 middle-area 的宽度 */
-  
+  grid-template-columns: 250px minmax(0, 1fr) 240px;
   min-height: 100vh;
   gap: 0;
   align-items: start;

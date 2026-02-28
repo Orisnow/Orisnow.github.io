@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import Stats from 'stats.js'
 import { onMounted, onUnmounted } from 'vue'
 

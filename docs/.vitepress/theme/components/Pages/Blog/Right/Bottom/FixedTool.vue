@@ -1,5 +1,8 @@
 <template>
   <div class="fixed-tool">
+    <button class="default-whisper-controller" @click="defaultWhisper = !defaultWhisper">
+      <SvgIcon :name="defaultWhisper ? 'eye-on' : 'eye-off'" size="24px"/>
+    </button>
     <button class="back-to-top" type="button" @click="scrollToTop" title="Back to Top">
       <SvgIcon name="back-to-top" size="24px"/>
     </button>
@@ -8,6 +11,7 @@
 
 <script setup lang="ts">
 import SvgIcon from '../../../../Tools/SvgIcon.vue';
+import { defaultWhisper } from '../../../../../utils/globalState.mts';
 
 // 简单的回到顶部逻辑
 const scrollToTop = () => {
@@ -26,7 +30,7 @@ const scrollToTop = () => {
   padding: 10px;
 }
 
-.back-to-top {
+.back-to-top, .default-whisper-controller {
   /* 清除默认样式 */
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
@@ -42,13 +46,13 @@ const scrollToTop = () => {
   justify-content: center;
 }
 
-.back-to-top:hover {
+.back-to-top:hover, .default-whisper-controller:hover {
   border-color: var(--vp-c-brand-1);
   color: var(--vp-c-brand-1);
   transform: translateY(-2px); /* 轻微上浮，增加交互感 */
 }
 
-.back-to-top:active {
+.back-to-top:active, .default-whisper-controller:active {
   transform: translateY(0);
 }
 </style>

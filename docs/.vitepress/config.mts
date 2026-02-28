@@ -1,11 +1,11 @@
 import { defineConfig } from 'vitepress';
 import { sharedConfig } from './share.mts';
-import { katex } from "@mdit/plugin-katex";
-
+import { katex } from '@mdit/plugin-katex';
+import { container } from '@mdit/plugin-container'
 
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { setupImageRenderer, setupWhisperRenderer } from './theme/utils/mdTohtml/renderer.mts';
+import { setupImageRenderer, setupWhisperRenderer, setupSectionRenderer } from './theme/utils/Md-Vue/renderer.mts';
 
 
 export default defineConfig({
@@ -17,6 +17,12 @@ export default defineConfig({
       md.use(katex);
       setupImageRenderer(md);
       setupWhisperRenderer(md);
+      setupSectionRenderer(md);
+      md.use(container, {
+        name: 'references',
+        openRender: () => `<ReferenceCollapse>\n`,
+        closeRender: () => `</ReferenceCollapse>\n`,
+      });
     },
   },
   ...sharedConfig,

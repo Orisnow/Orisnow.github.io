@@ -3,6 +3,50 @@ import { getImageMetadata } from './plugins/image_processor.mts';
 import type { MarkdownRenderer } from 'vitepress';
 import crypto from 'node:crypto';
 
+// 自动为 H2 标题之间的内容套上 SectionGroup 折叠组件
+export const setupSectionRenderer = (md: MarkdownRenderer) => {
+  // --- 1. 渲染规则保持原样（仅负责字符串拼接） ---
+  md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+    const defaultOpen = self.renderToken(tokens, idx, options);
+    if (tokens[idx].tag === 'h2') {
+      let prefix = env.__isSectionCurrentlyOpen ? `</template></SectionGroup>\n` : '';
+      env.__isSectionCurrentlyOpen = true; // 这个变量仅用于渲染时的“拉链”
+      return `${prefix}<SectionGroup><template #title>${defaultOpen}`;
+    }
+    return self.renderToken(tokens, idx, options);
+  };
+
+  md.renderer.rules.heading_close = (tokens, idx, options, env, self) => {
+    if (tokens[idx].tag === 'h2') {
+      return `${self.renderToken(tokens, idx, options)}</template><template #content>\n`;
+    }
+    return self.renderToken(tokens, idx, options);
+  };
+
+  // --- 2. 核心：解析阶段的物理闭环 ---
+  md.core.ruler.push('section_closer', (state) => {
+    const tokens = state.tokens;
+    
+    // 物理检查：本页到底有没有 h2？
+    // 这是在解析阶段最稳的判断方式，不依赖任何渲染状态
+    const hasH2 = tokens.some(t => t.type === 'heading_open' && t.tag === 'h2');
+
+    if (hasH2) {
+      // 只有确定有 h2，才补上总闸
+      const closeToken = new state.Token('html_block', '', 0);
+      closeToken.content = `</template></SectionGroup>`;
+      tokens.push(closeToken);
+    }
+  });
+
+  // --- 3. 解决 GPT 提到的“跨页污染” ---
+  // 确保每一页开始前，渲染器的状态是干净的
+  md.core.ruler.before('block', 'section_init', (state) => {
+    state.env.__isSectionCurrentlyOpen = false;
+  });
+};
+
+// 把图片格式自动渲染为Image组件
 export const setupImageRenderer = (md: MarkdownRenderer) => {
   md.renderer.rules.image = (tokens: Token[], idx: number, options: any, env: any) => {
     const token = tokens[idx];

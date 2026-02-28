@@ -1,4 +1,3 @@
-// .vitepress/plugins/image_processor.mts
 import sizeOf from 'image-size';
 import path from 'path';
 import fs from 'fs';

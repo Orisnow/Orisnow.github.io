@@ -5,9 +5,12 @@ import './styles/base.css';   // 个性化css
 import 'virtual:svg-icons-register';   // 必须导入该虚拟模块
 import { Buffer } from 'buffer';//和config.mts里的一起用
 //组件
+import Test from './components/Test.vue';
 import Image from './components/Tools/Image.vue';
 import SvgIcon from './components/Tools/SvgIcon.vue';
-import Whisper from './components/Tools/Whisper.vue';
+import Whisper from './components/Pages/Blog/Content/Renderer/Whisper.vue';
+import ReferenceCollapse from './components/Pages/Blog/Content/Renderer/ReferenceCollapse.vue';
+import SectionGroup from './components/Pages/Blog/Content/Renderer/SectionGroup.vue';
 import BlogLive2D from './components/Pages/Blog/Left/Bottom/BlogLive2D.vue';
 
 // 必须在任何业务代码运行前执行,不然会报错
@@ -18,9 +21,12 @@ if (typeof window !== 'undefined') {
 export default {
   Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
+    app.component('Test', Test)
     app.component('Image', Image)
     app.component('SvgIcon', SvgIcon)
     app.component('Whisper', Whisper)
+    app.component('ReferenceCollapse', ReferenceCollapse)
+    app.component('SectionGroup', SectionGroup)
     // app.component('BlogLive2D', BlogLive2D)
 
     // 自动注册Three文件夹下所有的vue组件
@@ -35,7 +41,7 @@ export default {
       }
     }
     // 自动注册ImageGroup文件夹下所有的vue组件
-    const ImageGroupModules = import.meta.glob('./components/ImageGroup/*.vue', { eager: true })
+    const ImageGroupModules = import.meta.glob('./components/Pages/Blog/Content/ImageGroup/*.vue', { eager: true })
     for (const path in ImageGroupModules) {
       const mod = ImageGroupModules[path] as any
       const component = mod.default

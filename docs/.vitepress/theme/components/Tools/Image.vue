@@ -85,6 +85,9 @@ onUnmounted(() => {
 
 <style lang="css" scoped>
 /* 容器设置为相对定位，方便 meta 定位 */
+.fancybox-wrapper {
+  display: flex;
+}
 .fancybox {
   position: relative;
   display: inline-block; /* 保持容器与图片大小一致 */

@@ -24,6 +24,9 @@ importers:
       '@fancyapps/ui':
         specifier: ^6.1.12
         version: 6.1.12
+      '@mdit/plugin-container':
+        specifier: ^0.23.0
+        version: 0.23.0(markdown-it@14.1.0)
       '@mdit/plugin-katex':
         specifier: ^0.24.1
         version: 0.24.1(markdown-it@14.1.0)
@@ -284,6 +287,15 @@ packages:
   '@mdit/helper@0.22.1':
     resolution: {integrity: sha512-lDpajcdAk84aYCNAM/Mi3djw38DJq7ocLw5VOSMu/u2YKX3/OD37a6Qb59in8Uyp4SiAbQoSHa8px6hgHEpB5g==}
     engines: {node: '>= 18'}
+    peerDependencies:
+      markdown-it: ^14.1.0
+    peerDependenciesMeta:
+      markdown-it:
+        optional: true
+
+  '@mdit/plugin-container@0.23.0':
+    resolution: {integrity: sha512-ufaQDtApytcUoR1MtkbMjZZe4AlqvvbzivDDUC9552SubFhPVTpKHHn09dPEl+OBvtMPfSOXcKGssQX8xVZaNA==}
+    engines: {node: '>= 20'}
     peerDependencies:
       markdown-it: ^14.1.0
     peerDependenciesMeta:
@@ -2511,6 +2523,12 @@ snapshots:
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
   '@mdit/helper@0.22.1(markdown-it@14.1.0)':
+    dependencies:
+      '@types/markdown-it': 14.1.2
+    optionalDependencies:
+      markdown-it: 14.1.0
+
+  '@mdit/plugin-container@0.23.0(markdown-it@14.1.0)':
     dependencies:
       '@types/markdown-it': 14.1.2
     optionalDependencies:

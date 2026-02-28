@@ -114,9 +114,11 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 1、卸载photoswipe,安装fancybox
 # 2026-2-25
 ## 1、重新在Image.vue配置好基本的fancybox，新建utils/Fancybox/useFancybox.mts，相应地修改renderer.mts，新建ImageGroup文件夹用于存放不同的图片组样式，传github测试
-
-
-
+## 2、新建utils/globalState.mts,处理了下Whisper和FixedTool组件使得括号（吐槽）可以收展
+# 2026-2-28
+## 1、安装@mdit/plugin-container，新建ReferenceCollapse，md.use对应的功能
+## 2、新建SectionGroup，在renderer.mts里加对应的功能
+## 3、
 
 
 
