@@ -2,7 +2,7 @@
 
 ```bash
 git add .
-git commit -m "test: add SectionGroup and ReferenceCollapse and corresponding functions"
+git commit -m "test: add ExampleCollapse and section anchor function"
 git push  
 <!-- 直接push容易有连接问题，可以通过SSH key解决 -->
 ```

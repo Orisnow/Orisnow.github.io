@@ -8,9 +8,6 @@ import { Buffer } from 'buffer';//和config.mts里的一起用
 import Test from './components/Test.vue';
 import Image from './components/Tools/Image.vue';
 import SvgIcon from './components/Tools/SvgIcon.vue';
-import Whisper from './components/Pages/Blog/Content/Renderer/Whisper.vue';
-import ReferenceCollapse from './components/Pages/Blog/Content/Renderer/ReferenceCollapse.vue';
-import SectionGroup from './components/Pages/Blog/Content/Renderer/SectionGroup.vue';
 import BlogLive2D from './components/Pages/Blog/Left/Bottom/BlogLive2D.vue';
 
 // 必须在任何业务代码运行前执行,不然会报错
@@ -24,9 +21,6 @@ export default {
     app.component('Test', Test)
     app.component('Image', Image)
     app.component('SvgIcon', SvgIcon)
-    app.component('Whisper', Whisper)
-    app.component('ReferenceCollapse', ReferenceCollapse)
-    app.component('SectionGroup', SectionGroup)
     // app.component('BlogLive2D', BlogLive2D)
 
     // 自动注册Three文件夹下所有的vue组件
@@ -51,6 +45,16 @@ export default {
         app.component(name, component)
       }
     }
+    // 自动注册Renderer文件夹下所有的vue组件
+    const RendererModules = import.meta.glob('./components/Pages/Blog/Content/Renderer/*.vue', { eager: true })
+    for (const path in RendererModules) {
+      const mod = RendererModules[path] as any
+      const component = mod.default
+      const name = path.split('/').pop()?.replace(/\.vue$/, '')
 
+      if (name && component) {
+        app.component(name, component)
+      }
+    }
   }
 } satisfies Theme

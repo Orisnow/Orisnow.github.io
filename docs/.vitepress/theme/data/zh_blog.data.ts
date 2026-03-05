@@ -1,55 +1,52 @@
-//coded by gemini
+// coded by gemini
 import { createContentLoader } from 'vitepress';
-
-export interface zh_blogData {
-  title: string;
-  href: string;
-  // 供卡片展示的单一日期字符串
-  displayDate: string;
-  // 原始日期数组，满足你“留给自己看”的需求
-  allDates: string[];
-  abstract?: string;
-  tags?: string[];
-  category?: string;
-  cover?: string;
-  recommend?: number;
-}
+import { version } from 'vue';
 
 export default createContentLoader('zh/blog/**/*.md', {
-  transform(raw): zh_blogData[] {
+  transform(raw) {
     return raw.map(({ url, frontmatter }) => {
-      // 1. 获取 rawDates 数组并清洗空值
-      // 兼容单字符串或数组情况，并剔除 undefined/null/空字符串
+      // 1. 先把 dates 转为数组处理，不管它是单值还是数组
       const rawDates = Array.isArray(frontmatter.dates) 
         ? frontmatter.dates 
         : (frontmatter.dates ? [frontmatter.dates] : []);
-      
-      const cleanDates = rawDates.filter(Boolean);
 
-      // 2. 取最后一位非空日期作为展示日期
-      const lastDate = cleanDates.length > 0 ? cleanDates[cleanDates.length - 1] : '';
+      // 2. 将数组里的每一项都安全地转为字符串
+      // 如果是 Date 对象，用 toISOString() 转回 2026-03-03...
+      // 如果是脏字符串（中文逗号），直接用 String() 保持原样
+      const serializedDates = rawDates.map(d => {
+        try {
+          return (d instanceof Date) ? d.toISOString() : String(d);
+        } catch {
+          return String(d);
+        }
+      }).join(' '); // 合并成一个大字符串方便正则统一抓取
+
+      // 3. 正则提取：只抓取 YYYY-MM-DD 部分
+      // 这样无论是 "2026-03-03T..." 还是 "2026-03-03，2026-03-05" 都能被抓到
+      const dateMatches = serializedDates.match(/\d{4}-\d{2}-\d{2}/g) || [];
+
+      // 4. 获取结果
+      const cleanDates = dateMatches;
+      const latestDate = cleanDates.length > 0 ? cleanDates[cleanDates.length - 1] : '';
 
       return {
         title: frontmatter.title || '无标题',
         href: url,
-        // 转换成 YYYY-MM-DD 格式
-        displayDate: lastDate ? new Date(lastDate).toISOString().split('T')[0] : '',
+        displayDate: latestDate, 
         allDates: cleanDates,
         abstract: frontmatter.abstract || frontmatter.description || '暂无摘要',
         tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
-        cover: frontmatter.cover,
         category: url.split('/')[3] || '无',
+        cover: frontmatter.cover,
         recommend: frontmatter.recommend,
+        version: frontmatter.version || 'v0.0.0',
       };
     })
-    // 根据最后编辑日期排序
     .sort((a, b) => {
-      const timeA = a.displayDate ? new Date(a.displayDate).getTime() : 0;
-      const timeB = b.displayDate ? new Date(b.displayDate).getTime() : 0;
-      return timeB - timeA; // 降序：最新的在前，没日期的垫底
+      // 降序排序
+      return (b.displayDate || '').localeCompare(a.displayDate || '');
     });
   }
 });
 
-// 加上下面这行，专门为了解决 VS Code 的报错
 export const data = [] as any;

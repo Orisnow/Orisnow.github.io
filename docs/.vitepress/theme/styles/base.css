@@ -3,6 +3,7 @@
 @import './fonts.css';
 @import './color.css';
 @import './layout.css';
+@import './markdown.css';
 
 /* 全局样式重置 */
 html {
@@ -47,3 +48,7 @@ table {
   border-spacing: 0;
 }
 
+/* 全局平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}

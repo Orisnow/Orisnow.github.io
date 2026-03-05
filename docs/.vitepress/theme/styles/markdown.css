@@ -1,0 +1,15 @@
+.markdown a {
+  color: var(--vp-c-brand-1);
+}
+
+/* 2. 给参考文献条目增加物理间隙，防止被导航栏遮挡 */
+li[id^="ref-"] {
+  scroll-margin-top: 100px; /* 根据你顶部导航栏的高度调整 */
+  transition: background-color 0.5s;
+}
+
+/* 3. 高亮闪烁动画（增强反馈感） */
+.highlight-flash {
+  background-color: var(--vp-c-brand-soft);
+  border-radius: 4px;
+}

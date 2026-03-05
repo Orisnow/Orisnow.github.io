@@ -5,13 +5,19 @@ import crypto from 'node:crypto';
 
 // 自动为 H2 标题之间的内容套上 SectionGroup 折叠组件
 export const setupSectionRenderer = (md: MarkdownRenderer) => {
-  // --- 1. 渲染规则保持原样（仅负责字符串拼接） ---
-  md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
-    const defaultOpen = self.renderToken(tokens, idx, options);
+    // --- 1. 渲染规则保持原样（仅负责字符串拼接） ---
+    md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
     if (tokens[idx].tag === 'h2') {
+      // 1. 获取 VitePress 自动生成的 id
+      const h2Id = tokens[idx].attrGet('id') || '';
+      // 2. 将这个 id 存入 env，供本页后续组件使用
+      env.currentH2Id = h2Id; 
+
+      const defaultOpen = self.renderToken(tokens, idx, options);
       let prefix = env.__isSectionCurrentlyOpen ? `</template></SectionGroup>\n` : '';
-      env.__isSectionCurrentlyOpen = true; // 这个变量仅用于渲染时的“拉链”
-      return `${prefix}<SectionGroup><template #title>${defaultOpen}`;
+      env.__isSectionCurrentlyOpen = true; 
+      
+      return `${prefix}<SectionGroup class="section-group"><template #title>${defaultOpen}`;
     }
     return self.renderToken(tokens, idx, options);
   };
@@ -20,6 +26,26 @@ export const setupSectionRenderer = (md: MarkdownRenderer) => {
     if (tokens[idx].tag === 'h2') {
       return `${self.renderToken(tokens, idx, options)}</template><template #content>\n`;
     }
+    return self.renderToken(tokens, idx, options);
+  };
+
+  // 在你的 setupSectionRenderer 或对应的配置函数中添加
+  md.renderer.rules.list_item_open = (tokens, idx, options, env, self) => {
+    // 1. 拿到紧跟在 list_item_open 之后的 inline token (内容)
+    const contentToken = tokens[idx + 2]; 
+    const content = contentToken?.content || "";
+
+    // 2. 正则匹配开头的 [1] 或 [12]
+    const match = content.match(/^\[(\d+)\]/);
+    
+    if (match) {
+      const num = match[1];
+      const ns = env.currentH2Id || 'default';
+      // 3. 注入 id，格式为 ref-曲线-切向量-1
+      return `<li id="ref-${ns}-${num}">`;
+    }
+
+    // 如果没匹配到，返回默认的 <li>
     return self.renderToken(tokens, idx, options);
   };
 
@@ -130,4 +156,24 @@ export const setupWhisperRenderer = (md: any) => {
 
     return defaultTextRenderer(tokens, idx, options, env, self);
   };
+};
+
+// 处理形如^[1]的字段
+export const setupFootnoteInline = (md: any) => {
+  const FOOTNOTE_RE = /^\^\[(\d+)\]/;
+
+  md.inline.ruler.after('emphasis', 'custom_footnote', (state: any, silent: boolean) => {
+    const match = state.src.slice(state.pos).match(FOOTNOTE_RE);
+    if (!match) return false;
+
+    if (!silent) {
+      const num = match[1];
+      // 这里的关键：渲染成 Vue 组件标签
+      const token = state.push('html_inline', '', 0);
+      token.content = `<FootnoteCite num="${num}" />`; 
+    }
+
+    state.pos += match[0].length;
+    return true;
+  });
 };

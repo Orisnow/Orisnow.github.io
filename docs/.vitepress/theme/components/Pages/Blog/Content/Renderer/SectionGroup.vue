@@ -1,5 +1,5 @@
 <template>
-  <div class="section-container" :class="{ 'is-collapsed': isCollapsed }">
+  <div class="section-group" :class="{ 'is-collapsed': isCollapsed }">
     <div class="section-header" ref="titleRef">
       <div class="arrow-icon" @click.stop="toggle">
         <SvgIcon name="hero-side-down" size="24px"/>
@@ -65,7 +65,7 @@ watch(() => hash, () => checkHash());
 </script>
 
 <style scoped>
-.section-container {
+.section-group {
   margin: 1.5rem 0;
   position: relative;
 }

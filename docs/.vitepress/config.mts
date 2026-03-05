@@ -5,23 +5,34 @@ import { container } from '@mdit/plugin-container'
 
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { setupImageRenderer, setupWhisperRenderer, setupSectionRenderer } from './theme/utils/Md-Vue/renderer.mts';
+import { setupImageRenderer, setupWhisperRenderer, setupSectionRenderer, setupFootnoteInline } from './theme/utils/Md-Vue/renderer.mts';
 
 
 export default defineConfig({
   title: "Balson's Garden",
   description: "My Official Website",
-  
   markdown: {
     config(md) {
       md.use(katex);
       setupImageRenderer(md);
       setupWhisperRenderer(md);
       setupSectionRenderer(md);
+      setupFootnoteInline(md);
       md.use(container, {
         name: 'references',
         openRender: () => `<ReferenceCollapse>\n`,
         closeRender: () => `</ReferenceCollapse>\n`,
+      });
+      md.use(container, {
+        name: 'example',
+        openRender: (tokens, index) => {
+          // 提取 ::: example 之后的所有文字作为 title
+          const title = tokens[index].info.trim().slice('example'.length).trim();
+          const escapedTitle = md.utils.escapeHtml(title);
+
+          return `<ExampleCollapse title="${escapedTitle}">\n`;
+        },
+        closeRender: () => `</ExampleCollapse>\n`,
       });
     },
   },

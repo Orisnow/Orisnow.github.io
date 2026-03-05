@@ -1,6 +1,6 @@
 <template>
   <div class="blog-post">
-    <article class="markdown-body">
+    <article class="markdown-body markdown">
       <Content />
     </article>
   </div>
