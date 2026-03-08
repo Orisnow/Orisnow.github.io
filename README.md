@@ -2,7 +2,7 @@
 
 ```bash
 git add .
-git commit -m "test: add ExampleCollapse and section anchor function"
+git commit -m "test: upload curve blog and test corresponding components"
 git push  
 <!-- 直接push容易有连接问题，可以通过SSH key解决 -->
 ```

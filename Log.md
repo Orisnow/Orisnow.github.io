@@ -123,8 +123,10 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 1、修改.data.ts,利用正则提取日期避免中文逗号导致的问题，把BlogTop改成通过当前目录使用blogData的以避免frontmatter问题
 # 2026-03-05
 ## 1、新建ExampleCollapse.vue和FootnoteCite.vue,修改ReferenceCollapse.vue,在renderer.mts里添加setupFootnoteInline,实现^[n]跳转功能(虽然过渡动画很搞笑),传github测试
-
-
+# 2026-03-07
+## 1、安装@mdit/plugin-emoji，新建emoji.mts自动读取public/emoji以自定义emoji
+# 2026-03-08
+## 1、在ahk写capslock控制中英文符号和成对符号自动补全与成对删除的脚本，参考(https://zhuanlan.zhihu.com/p/739912764)这篇文章，在setting.json里开启markdown下的snippet功能，在markdown.json和latex.json自定义配置自动补全，传github测试
 
 
 
@@ -142,3 +144,4 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## [[2026-01-30]]考虑到数学、物理、计算机、杂谈作为博客下的一级分类特点肯定是不适合原本vitepress的sidebar竖向的分类方式的（说到分类是不是可以添加一个让访客选择”根据标签“、”根据修改时间“之类的复选框？），在sidebar横向菜单的方式可能会好些但是又感觉会很拥挤，或者考虑在左侧做成像笔记本的书签夹那样（用颜色区分），但是我需要侧边栏折叠功能（像reddit那样的），又怕会有点击冲突问题，而且我还要预留出左下角的位置给2dlive人物，同时负责语言切换，明暗切换等功能（到时候navbar的相关功能则会去掉）。大纲我是不想直接显示的（要弄 的话也是可折叠的），因此右边会有较多空位，在右下角我想放几个工具按钮，比如设置，回到顶部，回到上一页这种，还有个我设想的切换阅读模式用的(参考obsidian)，默认是link mode,对于部分关键词设置内链组件显示有色高亮可以直接点击跳转，hover时则会在右边的空白处存在预览，切换后是read mode，则不会高亮，跳转和预览。额，暂时就想到这些，也不知道具体操作的可行性
 ## [[2026-02-25]]用UI Hijacking模拟图片大小组切换
 ## [[2026-03-01]]段落开头缩进问题
+## [[2026-03-08]]latex公式模块化处理的可能性?

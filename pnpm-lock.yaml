@@ -27,6 +27,9 @@ importers:
       '@mdit/plugin-container':
         specifier: ^0.23.0
         version: 0.23.0(markdown-it@14.1.0)
+      '@mdit/plugin-emoji':
+        specifier: ^0.2.1
+        version: 0.2.1(markdown-it@14.1.0)
       '@mdit/plugin-katex':
         specifier: ^0.24.1
         version: 0.24.1(markdown-it@14.1.0)
@@ -295,6 +298,15 @@ packages:
 
   '@mdit/plugin-container@0.23.0':
     resolution: {integrity: sha512-ufaQDtApytcUoR1MtkbMjZZe4AlqvvbzivDDUC9552SubFhPVTpKHHn09dPEl+OBvtMPfSOXcKGssQX8xVZaNA==}
+    engines: {node: '>= 20'}
+    peerDependencies:
+      markdown-it: ^14.1.0
+    peerDependenciesMeta:
+      markdown-it:
+        optional: true
+
+  '@mdit/plugin-emoji@0.2.1':
+    resolution: {integrity: sha512-fZewhJcz8xn28S2YFJ10vK1+8X3iO5MMJM0L081Dbe+E/pclRPIH2wshymY6GHAbGVA6+9z6NYV5wHjK9D312g==}
     engines: {node: '>= 20'}
     peerDependencies:
       markdown-it: ^14.1.0
@@ -2529,6 +2541,12 @@ snapshots:
       markdown-it: 14.1.0
 
   '@mdit/plugin-container@0.23.0(markdown-it@14.1.0)':
+    dependencies:
+      '@types/markdown-it': 14.1.2
+    optionalDependencies:
+      markdown-it: 14.1.0
+
+  '@mdit/plugin-emoji@0.2.1(markdown-it@14.1.0)':
     dependencies:
       '@types/markdown-it': 14.1.2
     optionalDependencies:

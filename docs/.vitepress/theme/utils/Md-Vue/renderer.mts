@@ -2,6 +2,8 @@ import type Token from 'markdown-it/lib/token.mjs';
 import { getImageMetadata } from './plugins/image_processor.mts';
 import type { MarkdownRenderer } from 'vitepress';
 import crypto from 'node:crypto';
+import katex from 'katex'; // 必须引入这个物理引擎
+
 
 // 自动为 H2 标题之间的内容套上 SectionGroup 折叠组件
 export const setupSectionRenderer = (md: MarkdownRenderer) => {
@@ -136,25 +138,39 @@ export const setupImageRenderer = (md: MarkdownRenderer) => {
   });
 };
 
-// 将文本中的中英文括号替换为 Whisper 组件
 export const setupWhisperRenderer = (md: any) => {
-  const defaultTextRenderer = md.renderer.rules.text || ((tokens: Token[], idx: number) => tokens[idx].content);
+  const originalRender = md.render;
 
-  md.renderer.rules.text = (tokens: Token[], idx: number, options: any, env: any, self: any) => {
-    let content = tokens[idx].content;
+  md.render = (src: string, env: any) => {
+    const protectedBlocks: string[] = [];
+    let content = src;
 
-    // 重点 1：先执行默认渲染，确保特殊字符被转义
-    // 但注意：不要对已经包含 <Image 的 inline 内容进行二次 text 替换
-    const whisperRegex = /[（\(]([^（\(\)\)]+?)[）\)]/g; 
+    // 1. 建立保护区（保护公式、代码、脚本）
+    const protectRegex = /(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|\$\$[\s\S]+?\$\$|\$.+?\$|```[\s\S]*?```|`[^`]+`)/g;
+    content = content.replace(protectRegex, (match) => {
+      const id = protectedBlocks.length;
+      protectedBlocks.push(match);
+      return `@@@PROTECTED_${id}@@@`;
+    });
 
-    if (whisperRegex.test(content)) {
-      // 重点 2：只替换真正的纯文本
-      return content.replace(whisperRegex, (_match: string, p1: string) => {
-        return `<Whisper>${p1}</Whisper>`;
-      });
-    }
+    // 2. 保护链接
+    const linkRegex = /(?<!!|\\)\[([^\]]+)\]\(([^)]+)\)/g;
+    content = content.replace(linkRegex, (_match, text, url) => {
+      return `<SmartLink href="${url}">${text}</SmartLink>`;
+    });
 
-    return defaultTextRenderer(tokens, idx, options, env, self);
+    // 3. 执行 Whisper 转换（现在它会吞掉占位符）
+    const whisperRegex = /[（\(]([^（\(\)\n]+?)[）\)]/g;
+    content = content.replace(whisperRegex, (_match, p1) => {
+      return `<Whisper>${p1}</Whisper>`;
+    });
+
+    // 4. 还原保护区
+    content = content.replace(/@@@PROTECTED_(\d+)@@@/g, (_match, id) => {
+      return protectedBlocks[parseInt(id)];
+    });
+
+    return originalRender.call(md, content, env);
   };
 };
 

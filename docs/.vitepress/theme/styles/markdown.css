@@ -13,3 +13,22 @@ li[id^="ref-"] {
   background-color: var(--vp-c-brand-soft);
   border-radius: 4px;
 }
+
+/* 使用更具体的类名，甚至可以加上父级以提高优先级 */
+.markdown-body img.custom-emoji {
+  /* 1. 核心：强制回归行内流 */
+  display: inline-block !important;
+  vertical-align: -0.2em; /* 物理对齐：让图片沉下去一点，对齐文字底线 */
+  
+  /* 2. 核心：重置大组件的布局样式 */
+  margin: 0 0.2em !important; /* 覆盖 margin: auto */
+  width: 1.2em !important;    /* 限制宽度，随字号缩放 */
+  height: 1.2em !important;   /* 限制高度 */
+  
+  /* 3. 视觉：去掉不该有的装饰 */
+  box-shadow: none !important; /* 删掉那个大阴影 */
+  cursor: default !important;   /* 既然是 emoji，通常不需要放大镜 */
+  
+  /* 4. 动画：如果需要，可以加个简单的呼吸感 */
+  transition: transform 0.2s;
+}

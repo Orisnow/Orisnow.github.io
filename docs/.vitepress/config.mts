@@ -6,7 +6,7 @@ import { container } from '@mdit/plugin-container'
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { setupImageRenderer, setupWhisperRenderer, setupSectionRenderer, setupFootnoteInline } from './theme/utils/Md-Vue/renderer.mts';
-
+import { setupEmoji } from './theme/utils/emoji.mts';
 
 export default defineConfig({
   title: "Balson's Garden",
@@ -14,6 +14,7 @@ export default defineConfig({
   markdown: {
     config(md) {
       md.use(katex);
+      setupEmoji(md);
       setupImageRenderer(md);
       setupWhisperRenderer(md);
       setupSectionRenderer(md);
@@ -22,6 +23,11 @@ export default defineConfig({
         name: 'references',
         openRender: () => `<ReferenceCollapse>\n`,
         closeRender: () => `</ReferenceCollapse>\n`,
+      });
+      md.use(container, {
+        name: 'tips',
+        openRender: () => `<Tips>\n`,
+        closeRender: () => `</Tips>\n`,
       });
       md.use(container, {
         name: 'example',

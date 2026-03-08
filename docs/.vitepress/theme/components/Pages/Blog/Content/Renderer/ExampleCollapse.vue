@@ -27,16 +27,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, nextTick } from 'vue'; // 增加引用
 import SvgIcon from '../../../../Tools/SvgIcon.vue';
 
 defineProps<{ title?: string }>();
 
-// 1. 状态默认设为 true
 const isExpanded = ref(true);
 const bodyRef = ref<HTMLElement | null>(null);
-// 2. 初始高度设为 auto，确保首屏加载时内容可见且高度正确
-const bodyHeight = ref('auto');
+// 1. 初始高度设为 null 或 'none'，不再用 auto 占位
+const bodyHeight = ref<string | undefined>(undefined);
+
+// 核心修正：挂载后立即捕捉真实物理高度
+onMounted(async () => {
+  await nextTick();
+  if (bodyRef.value) {
+    // 将初始的可见状态，从逻辑上的“可见”变为物理上的“具体高度”
+    bodyHeight.value = `${bodyRef.value.scrollHeight}px`;
+  }
+});
 
 const toggle = () => {
   if (!bodyRef.value) return;
@@ -45,16 +53,19 @@ const toggle = () => {
     // 展开逻辑
     bodyHeight.value = `${bodyRef.value.scrollHeight}px`;
     isExpanded.value = true;
-    // 动画结束后释放高度限制
+    
+    // 展开完成后释放回 auto，保证响应式布局（如窗口缩放时内容不被截断）
     setTimeout(() => { 
       if(isExpanded.value) bodyHeight.value = 'auto' 
     }, 400);
   } else {
-    // 收起逻辑：从 auto 切换到具体的 px 值以触发过渡动画
-    bodyHeight.value = `${bodyRef.value.scrollHeight}px`;
-    
-    // 强制重绘 (Reflow)，确保浏览器捕捉到从 auto 到具体数值的变化
-    bodyRef.value.offsetHeight; 
+    // 收起逻辑
+    // 如果当前是 auto（比如刚展开完），先闪电还原为 px 值
+    if (bodyHeight.value === 'auto') {
+      bodyHeight.value = `${bodyRef.value.scrollHeight}px`;
+      // 强制重绘，给浏览器 1 像素的时间反应
+      bodyRef.value.offsetHeight; 
+    }
     
     bodyHeight.value = '0px';
     isExpanded.value = false;
