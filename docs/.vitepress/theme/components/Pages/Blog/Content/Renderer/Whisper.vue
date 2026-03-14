@@ -1,11 +1,17 @@
 <template>
-  <span class="whisper-root" @click="isActive = !isActive" :class="{ 'is-active': isActive }">
+  <span 
+    class="whisper-root" 
+    @click="handleToggle($event)" 
+    :class="{ 'is-active': isActive }"
+  >
     <span class="whisper-bracket left">｢</span>
 
-    <span v-if="isActive" class="whisper-body">
-      <slot />
-    </span>
-    <span v-else class="whisper-placeholder"></span>
+    <Transition name="whisper-fade">
+      <span v-if="isActive" class="whisper-body">
+        <slot />
+      </span>
+      <span v-else class="whisper-placeholder"></span>
+    </Transition>
 
     <span class="whisper-bracket right">｣</span>
   </span>
@@ -20,67 +26,79 @@ const isActive = ref(defaultWhisper.value);
 watch(defaultWhisper, (newVal) => {
   isActive.value = newVal;
 });
+
+// 核心逻辑：物理拦截器
+const handleToggle = (event: MouseEvent) => {
+  // 如果按下的是 Ctrl (Win/Linux) 或 Command (Mac)
+  // 或者按下的是鼠标中键 (button === 1)
+  if (event.ctrlKey || event.metaKey || event.button === 1) {
+    // 物理放行：不做任何折叠动作，让内部的 SmartLink 正常工作
+    return;
+  }
+  
+  // 正常点击逻辑
+  isActive.value = !isActive.value;
+};
 </script>
 
 <style lang="css" scoped>
 .whisper-root {
   display: inline;
   cursor: pointer;
-  /* 过渡效果主要针对颜色 */
   transition: color 0.3s ease;
   position: relative;
-  padding: 0 -1px;
+  -webkit-user-select: none;
+  user-select: none;
+  /* 允许在 root 级别处理折行 */
+  white-space: normal; 
 }
 
 /* --- 括号逻辑 --- */
 .whisper-bracket {
-  display: inline-block; /* 必须是 block 才能应用 transform 动画 */
+  display: inline; /* 回归 inline，确保括号紧贴文字 */
   font-weight: 1200;
   font-size: 0.88em;
-  line-height: 0;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  
-  /* 收起状态的默认颜色：浅灰色 */
+  transition: color 0.3s ease;
   color: #a0a0a0; 
 }
 
-/* Hover 时、以及展开后的括号颜色 */
 .whisper-root:hover .whisper-bracket,
 .whisper-root.is-active .whisper-bracket {
   color: rgb(197, 186, 255);
 }
 
 .whisper-bracket.left {
-  vertical-align: 0.2em;
+  vertical-align: 0.15em;
+  margin-right: -0.1em;
 }
 .whisper-bracket.right {
-  vertical-align: -0.1em;
+  vertical-align: -0.12em;
+  margin-left: -0.1em;
 }
 
 /* --- 内容体逻辑 --- */
 .whisper-body {
+  display: inline; /* 核心：回归 inline 以支持正常折行 */
   font-size: 0.95rem;
-  color: rgb(173, 165, 211); /* 展开后的文字颜色 */
-  padding: 0 2px;
+  color: rgb(173, 165, 211);
+  /* 移除 padding，避免在行首行末产生奇怪的空隙 */
+  padding: 0;
 }
 
 .whisper-placeholder {
-   margin: 0 -1.5px;
+  display: inline;
+  width: 0;
 }
 
-/* --- 自由发挥：Vue Transition 动画 --- */
-/* 实现一种文字“滑入”并“淡入”的效果 */
+/* --- Vue Transition 动画（折行友好版） --- */
+/* 注意：inline 元素不支持 transform，所以我们用 opacity 和 filter */
 .whisper-fade-enter-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.whisper-fade-leave-active {
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .whisper-fade-enter-from,
 .whisper-fade-leave-to {
   opacity: 0;
-  transform: scaleX(0.5); /* 从中心轴稍微挤压 */
-  filter: blur(2px);      /* 增加一点点 Blackwell 能轻松处理的模糊感 */
+  filter: blur(4px);
 }
 </style>

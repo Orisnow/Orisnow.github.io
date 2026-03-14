@@ -88,4 +88,12 @@ const recommendedBlogs = computed(() => {
   height: 5rem;
   margin: 0 5rem;
 }
+
+@media (max-width: 630px) {
+  .blog-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+}
 </style>

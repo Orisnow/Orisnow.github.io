@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { sharedConfig } from './share.mts';
-import { katex } from '@mdit/plugin-katex';
+import { katex, type MarkdownItKatexOptions } from '@mdit/plugin-katex';
 import { container } from '@mdit/plugin-container'
 
 import path from 'path';
@@ -13,12 +13,30 @@ export default defineConfig({
   description: "My Official Website",
   markdown: {
     config(md) {
-      md.use(katex);
-      setupEmoji(md);
+      // 1. 拦截全局警告
+      const originalWarn = console.warn;
+      console.warn = (...args: any[]) => {
+        const msg = args[0];
+        if (
+          typeof msg === "string" && 
+          (msg.includes("No character metrics") || msg.includes("unknownSymbol"))
+        ) {
+          return; 
+        }
+        originalWarn(...args);
+      };
+      // 2. 正确使用插件配置
+      // 既然已经全局拦截了，这里传一个标准的空对象或必要的配置即可
+      md.use(katex, {
+        throwOnError: false,
+        // 如果你确实想用 logger 字段，可以传一个空函数
+        logger: () => "ignore" 
+      });
       setupImageRenderer(md);
       setupWhisperRenderer(md);
       setupSectionRenderer(md);
       setupFootnoteInline(md);
+      setupEmoji(md);
       md.use(container, {
         name: 'references',
         openRender: () => `<ReferenceCollapse>\n`,
@@ -65,6 +83,8 @@ export default defineConfig({
       // 这里是关键：我们稍后会在入口手动引入 Buffer 并挂载到 window
       'Buffer': 'window.Buffer', 
     },
-  }
+  },
+
+  
   
 })

@@ -2,7 +2,7 @@
 title: 桁架
 dates: [2026-03-01, ]
 version: v0.0.0
-cover: https://ghproxy.net/https://raw.githubusercontent.com/Orisnow/Images/refs/heads/main/sana/%E6%89%AB%E6%8F%8F%E5%9B%BE.jpg
+cover: 
 abstract: 
 recommend: 0
 tags: 
@@ -10,7 +10,7 @@ tags:
   - 模型
 ---
 
-## 桁架-[力](force.md)
+## 桁架-[力](force)
 不考虑重力与其他外力的影响，当采用铰接的方式连接端点，即不考虑直杆的受弯情况时，直杆内部的力方向便限定在了沿杆的直线上，我们把这样的直杆相互以一定方式铰接在一起，这个整体的每个直杆的受力情况就十分直观。
 
 在静力学中，我们会把部分端点连接到特殊结构的支座上，此时就可能存在切向力。由于整体是受力平衡的，我们可以任意圈选出一个假想刚体，其上的受力情况即为**内部**所有直杆和支座受力情况的总和（所谓节点法截面法也都可从这里得到）

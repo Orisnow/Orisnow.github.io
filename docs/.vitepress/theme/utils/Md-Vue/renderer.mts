@@ -2,7 +2,6 @@ import type Token from 'markdown-it/lib/token.mjs';
 import { getImageMetadata } from './plugins/image_processor.mts';
 import type { MarkdownRenderer } from 'vitepress';
 import crypto from 'node:crypto';
-import katex from 'katex'; // 必须引入这个物理引擎
 
 
 // 自动为 H2 标题之间的内容套上 SectionGroup 折叠组件
