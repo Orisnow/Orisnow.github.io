@@ -1,7 +1,7 @@
 ---
 title: 力
 dates: [2026-02-16,]
-version: v0.0.1
+version: v0.2.1
 cover: 
 abstract: 随便写点对力的理解
 recommend: 3

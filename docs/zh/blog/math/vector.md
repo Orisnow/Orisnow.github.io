@@ -1,10 +1,10 @@
 ---
 title: 向量
-dates: [2026-03-10, ]
-version: v0.0.0
+dates: [2026-03-10, 2026-03-14 ]
+version: v0.7.2
 cover: 
 abstract: 向量是连接几何与代数的桥梁
-recommend: 
+recommend: 666
 tags: 
   - 几何
   - 代数
@@ -84,7 +84,7 @@ $$
 $$
 [\mathbf{A}\times \mathbf{B}\quad\mathbf{B}\times \mathbf{C}\quad\mathbf{C}\times \mathbf{A}]=[\mathbf{A}\: \mathbf{B} \: \mathbf{C}]^2\nonumber
 $$
-由于 $[\mathbf{A}\: \mathbf{B} \: \mathbf{C}]$ 可表示为 $\det(\mathbf{M})$，其中 $\mathbf{M}=\lgroup \mathbf{A}\: \mathbf{B} \: \mathbf{C} \rgroup$，所以右式可以表示为：
+(见[行列式](determinant))由于 $[\mathbf{A}\: \mathbf{B} \: \mathbf{C}]$ 可表示为 $\det(\mathbf{M})$，其中 $\mathbf{M}=\lgroup \mathbf{A}\: \mathbf{B} \: \mathbf{C} \rgroup$，所以右式可以表示为：
 $$
 [\mathbf{A}\: \mathbf{B} \: \mathbf{C}]^2
 =
@@ -108,3 +108,6 @@ $$
 ## 向量-[矩阵](matrix)
 
 ## 向量-外积
+
+
+

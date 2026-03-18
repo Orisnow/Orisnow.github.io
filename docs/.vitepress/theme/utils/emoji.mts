@@ -39,7 +39,7 @@ export const setupEmoji = (md: MarkdownRenderer) => {
     // 自动匹配后缀并生成 HTML
     if (emojiMap[name]) {
       const ext = emojiMap[name];
-      return `<img src="/emoji/${name}${ext}" class="custom-emoji" alt="${name}" loading="lazy" />`;
+      return `<img src="/emoji/${name}${ext}" class="custom-emoji" alt="${name}" />`;
     }
 
     // 降级处理：如果没有匹配到自定义图片，返回原生内容（如 ✅）

@@ -2,7 +2,7 @@
 
 ```bash
 git add .
-git commit -m "test: add curve blog and vector blog"
+git commit -m "test: add plenty of blogs"
 git push  
 <!-- 直接push容易有连接问题，可以通过SSH key解决 -->
 ```
