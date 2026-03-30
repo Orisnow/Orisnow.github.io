@@ -2,19 +2,36 @@
 
 ---
 
+
+
+Don't just read it; fight it! Ask your own questions, look for your own examples, discover your own proofs. Is the hypothesis necessary? Is the converse true? What happens in the classical special case? What about the degenerate cases? Where does the proof use the hypothesis?
+
+ ——Paul Halmos, I want to be a Mathematician, Washington 1985.
+
+::: tips
+这段话是我从B站的[PiKaChu345](https://space.bilibili.com/180947374)(是位我相当尊敬和喜爱的老师)了解到的，记述于此以警示自己，同时献给所有在此驻足的朋友
+:::
+
 ### Garden写作原则
 当采用“主要对象-次要对象”的小标题时
 1、（核心）当采用次要对象考察主要对象时，非必要不对次要对象及其延申出的一些概念和性质做出解释，并把涉及到的其他对象都视为工具
 2、（核心）应尽量避免直接定义对象，如为避免引起歧义而定义对象应说明是在当前的小标题下
-3、不同领域的同名概念应在标题显式做出区分
-4、越是抽象的概念，越是需要具体例子的支撑，故对于抽象的概念，应尽量做到“从实际中来，到实际中去”
-5、使用括号是本人一直以来的写作习惯，本意是吐槽，客观上有时也能起到补充说明的作用
-6、文章版本号vA.B.C,A=0表示文章在草稿阶段，A=1表示文章基本能看不算丢人，A=2表示文章的内容丰富且没有大问题，A=3是……只有成为专家才能写出来的，B表示小标题数量（可以理解为大改），C表示更改的日期数
+3、（核心）如定理作为主要对象，且不单独成一篇blog，即大标题对象是次要对象，逻辑上讲最好放在文章的后面
+4、不同领域的同名概念应在标题显式做出区分
+5、越是抽象的概念，越是需要具体例子的支撑，故对于抽象的概念，应尽量做到“从实际中来，到实际中去”
+6、使用括号是本人一直以来的写作习惯，本意是吐槽，客观上有时也能起到补充说明的作用
+7、文章版本号vA.B.C,A=0表示文章在草稿阶段，A=1表示文章基本能看不算丢人，A=2表示文章的内容丰富且没有大问题，A=3是……只有成为专家才能写出来的，B表示小标题数量（可以理解为大改），C表示更改的日期数
 
 ### 关于符号
-标量直接写：$ABCabc$
+变量标量直接写：$ABCabc$
 
-向量用mathbf：$\mathbf{ABCabc}$
+常数单位量纲用mathrm：$\mathrm{ABCabc}$
+
+向量矩阵用mathbf：$\mathbf{ABCabc}$
+
+张量用mathsf(改了css)：$\mathsf{ABC}$
+
+涉及希腊字母的向量矩阵用boldsymbol：$\boldsymbol{\omega \sigma}$
 
 一般集合用mathcal：$\mathcal{ABCabc}$
 

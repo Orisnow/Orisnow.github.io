@@ -32,3 +32,11 @@ li[id^="ref-"] {
   /* 4. 动画：如果需要，可以加个简单的呼吸感 */
   transition: transform 0.2s;
 }
+
+
+/* 针对 KaTeX 里的无衬线体进行加粗 */
+.katex .mathsf {
+  font-weight: 500 !important; /* 使用最重的字重 */
+  /* 如果你的字体库 font.css 支持，可以指定更厚重的无衬线字体 */
+  font-family: "Inter", "Helvetica", "Arial", sans-serif; 
+}

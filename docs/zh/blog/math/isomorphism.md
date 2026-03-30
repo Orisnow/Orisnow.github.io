@@ -1,6 +1,6 @@
 ---
-title: 极限
-dates: [2026-03-28 ]
+title: 同构
+dates: [2026 ]
 version: v0.0.0
 cover: 
 abstract: 
@@ -8,5 +8,3 @@ recommend:
 tags: 
   - 
 ---
-
-## 极限-聚点
