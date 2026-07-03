@@ -49,26 +49,42 @@ const ActualHref = computed(() => {
 });
 // 用URL API自动从路径提取文件名
 const ImageName = computed(() => {
+  // 1. 如果传了 alt 且不为空，直接用 alt
+  if (props.alt && props.alt.trim() !== '') {
+    return props.alt;
+  }
+  
+  // 2. 如果没有 alt，则走原来的 URL 路径提取逻辑
   try {
-    const pathname: string = new URL(props.src, location.origin).pathname
-    return decodeURIComponent(pathname.split('/').at(-1) ?? 'image')
+    const pathname: string = new URL(props.src, location.origin).pathname;
+    return decodeURIComponent(pathname.split('/').at(-1) ?? 'image');
   } catch {
-    return 'image'
+    return 'image';
   }
-})
-// 最大允许显示的文件名长度（不含后缀）
-const MAX_FILENAME_LENGTH: number = 20
+});
+
+// 最大允许显示的文件名长度（仅当没传 alt 且从文件名提取时生效）
+const MAX_FILENAME_LENGTH: number = 20;
+
 const DisplayFileName = computed(() => {
-  const fullName: string = ImageName.value // 直接使用 ImageName
-  if (!fullName) return 'image'
-  // 去掉后缀
-  const nameWithoutExt: string = fullName.replace(/\.[^/.]+$/, '')
-  // 过长则兜底
-  if (nameWithoutExt.length > MAX_FILENAME_LENGTH) {
-    return 'image'
+  // 情况 A：如果是用户自己写了 []，不管多长都直接原样展示（或者你也可以让它也参与截断，但通常用户自己写的应该被信任）
+  if (props.alt && props.alt.trim() !== '') {
+    return props.alt;
   }
-  return nameWithoutExt
-})
+
+  // 情况 B：如果用户留空，使用的是提取的文件名，则继续走你原先的过长兜底逻辑
+  const fullName: string = ImageName.value;
+  if (!fullName) return 'image';
+  
+  // 去掉后缀
+  const nameWithoutExt: string = fullName.replace(/\.[^/.]+$/, '');
+  
+  // 文件名过长则兜底为 'image'
+  if (nameWithoutExt.length > MAX_FILENAME_LENGTH) {
+    return 'image';
+  }
+  return nameWithoutExt;
+});
 
 
 onMounted(() => {

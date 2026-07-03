@@ -21,6 +21,7 @@ Don't just read it; fight it! Ask your own questions, look for your own examples
 5、越是抽象的概念，越是需要具体例子的支撑，故对于抽象的概念，应尽量做到“从实际中来，到实际中去”
 6、使用括号是本人一直以来的写作习惯，本意是吐槽，客观上有时也能起到补充说明的作用
 7、文章版本号vA.B.C,A=0表示文章在草稿阶段，A=1表示文章基本能看不算丢人，A=2表示文章的内容丰富且没有大问题，A=3是……只有成为专家才能写出来的，B表示小标题数量（可以理解为大改），C表示更改的日期数
+8、如果以当前水平实在找不到次要对象进行解释时，主要对象会暂时性地拥有"枢纽"的角色定位
 
 ### 关于符号
 变量标量直接写：$ABCabc$
@@ -36,3 +37,5 @@ Don't just read it; fight it! Ask your own questions, look for your own examples
 一般集合用mathcal：$\mathcal{ABCabc}$
 
 数集用mathbb：$\mathbb{NQZRC}$
+
+在数学中，虚数多用 $i$ ，在物理和计算机中，虚数多用 $j$

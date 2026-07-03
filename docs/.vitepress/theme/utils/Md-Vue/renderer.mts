@@ -137,6 +137,39 @@ export const setupImageRenderer = (md: MarkdownRenderer) => {
   });
 };
 
+export const setupImageGroupRenderer = (md: any) => {
+  const defaultRender = md.renderer.rules.html_block || function(tokens: any, idx: number, options: any, env: any, self: any) {
+    return self.renderToken(tokens, idx, options);
+  };
+
+  md.renderer.rules.html_block = (tokens: any, idx: number, options: any, env: any, self: any) => {
+    let content = tokens[idx].content;
+
+    // 匹配包含 :items="[ 的图片组组件块
+    if (content.includes(':items="[')) {
+      const srcRegex = /src:\s*['"]([^'"]+)['"]/g;
+      let match;
+      let updatedContent = content;
+
+      while ((match = srcRegex.exec(content)) !== null) {
+        const src = match[1];
+        // 物理读取磁盘上的图片信息
+        const { width, height, filesize } = getImageMetadata(src);
+
+        // 拼接成完整的属性注入
+        const metaStr = `src: '${src}', width: ${width}, height: ${height}, filesize: '${filesize}'`;
+        const originStr = match[0]; 
+        
+        updatedContent = updatedContent.replace(originStr, metaStr);
+      }
+      
+      return updatedContent; // 返回被缝合好元数据的新 HTML 字符串
+    }
+
+    return defaultRender(tokens, idx, options, env, self);
+  };
+};
+
 export const setupWhisperRenderer = (md: any) => {
   const originalRender = md.render;
 
@@ -144,31 +177,35 @@ export const setupWhisperRenderer = (md: any) => {
     const protectedBlocks: string[] = [];
     let content = src;
 
-    // 1. 建立保护区（保护公式、代码、脚本）
-    const protectRegex = /(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|\$\$[\s\S]+?\$\$|\$.+?\$|```[\s\S]*?```|`[^`]+`)/g;
+    // 🚀 1. 全量超级保护区：
+    // 保护标准图片、Markdown 代码块 (```)、行内代码 (` )、以及所有的 Vue 脚本和样式块
+    // 这样能确保元数据、脚本代码里面的 () 绝对不会被 Whisper 误伤
+    const protectRegex = /(!\[[^\]]*\]\([^)]+\)|```[\s\S]*?```|`[^`]+`|<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>)/g;
+    
     content = content.replace(protectRegex, (match) => {
       const id = protectedBlocks.length;
       protectedBlocks.push(match);
-      return `@@@PROTECTED_${id}@@@`;
+      return `@@@SYSTEM_PROTECTED_${id}@@@`;
     });
 
-    // 2. 保护链接
+    // 2. 此时环境绝对安全，转换普通链接为 <SmartLink>
     const linkRegex = /(?<!!|\\)\[([^\]]+)\]\(([^)]+)\)/g;
     content = content.replace(linkRegex, (_match, text, url) => {
       return `<SmartLink href="${url}">${text}</SmartLink>`;
     });
 
-    // 3. 执行 Whisper 转换（现在它会吞掉占位符）
-    const whisperRegex = /[（\(]([^（\(\)\n]+?)[）\)]/g;
+    // 3. 此时只有正文里的普通文本会留下来，安全转换你的吐槽括号 () 或 （）
+    const whisperRegex = /[\(（]([^（\(\)\n]+?)[）\)]/g;
     content = content.replace(whisperRegex, (_match, p1) => {
       return `<Whisper>${p1}</Whisper>`;
     });
 
-    // 4. 还原保护区
-    content = content.replace(/@@@PROTECTED_(\d+)@@@/g, (_match, id) => {
+    // 4. 转换一切完毕后，将保护区里的图片、代码、脚本原封不动、毫发无损地还原回去
+    content = content.replace(/@@@SYSTEM_PROTECTED_(\d+)@@@/g, (_match, id) => {
       return protectedBlocks[parseInt(id)];
     });
 
+    // 5. 愉快地交还给 VitePress 核心编译器
     return originalRender.call(md, content, env);
   };
 };

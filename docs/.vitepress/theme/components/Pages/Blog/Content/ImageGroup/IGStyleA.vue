@@ -6,8 +6,7 @@
           v-for="(item, index) in items" 
           :key="index"
           :class="{ active: activeIndex === index }" 
-          @click="setIndex(index)" 
-        >
+          @click="setIndex(index)" >
           {{ item.label }}
         </button>
       </div>
@@ -20,8 +19,9 @@
         >
           <Image 
             :src="item.src"
-            :width="width  "
-            :height="height "
+            :width="item.width"       
+            :height="item.height"     
+            :filesize="item.filesize" 
             :gallery="galleryId" 
           />
         </div>
@@ -34,16 +34,16 @@
 import IGBase from './IGBase.vue';
 import Image from '../../../../Tools/Image.vue';
 
-
 interface Item {
   label: string;
   src: string;
+  width?: number;    // 👈 允许接收注入
+  height?: number;   // 👈 允许接收注入
+  filesize?: string; // 👈 允许接收注入
 }
 
 defineProps<{ 
   items: Item[], 
-  width?: number, 
-  height?: number,
   gallery?: string,
 }>();
 </script>

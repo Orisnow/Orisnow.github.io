@@ -2,6 +2,7 @@
 import type { Theme } from 'vitepress';
 import MyLayout from './MyLayout.vue';
 import './styles/base.css';   // 个性化css
+// @ts-ignore
 import 'virtual:svg-icons-register';   // 必须导入该虚拟模块
 import { Buffer } from 'buffer';//和config.mts里的一起用
 //组件

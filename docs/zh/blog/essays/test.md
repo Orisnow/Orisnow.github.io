@@ -1,12 +1,15 @@
 ---
-title: 我的第一篇博客(用于测试)
+title: 我的第一篇博客(测试)
 dates: [2026-01-30,2026-02-03,]
+version: v1.5.2
 cover: https://ghproxy.net/https://raw.githubusercontent.com/Orisnow/Images/refs/heads/main/sana/%E6%89%AB%E6%8F%8F%E5%9B%BE.jpg
 abstract: 我能在患有痴呆症的情况下写完这篇博文吗?
 recommend: 114514
 tags: 
   - 测试
   - 梗
+  - 游戏
+  - MC
 ---
 
 

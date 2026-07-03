@@ -127,6 +127,11 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## 1、安装@mdit/plugin-emoji，新建emoji.mts自动读取public/emoji以自定义emoji
 # 2026-03-08
 ## 1、在ahk写capslock控制中英文符号和成对符号自动补全与成对删除的脚本，参考(https://zhuanlan.zhihu.com/p/739912764)这篇文章，在setting.json里开启markdown下的snippet功能，在markdown.json和latex.json自定义配置自动补全，传github测试
+# 2026-07-02
+## 1、几个月没管回来一看感觉乱成一锅粥了……
+# 2026-07-03
+## 1、修了下关于图片和图片组显示和自动提取元数据的问题
+
 
 
 
@@ -145,3 +150,4 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## [[2026-02-25]]用UI Hijacking模拟图片大小组切换
 ## [[2026-03-01]]段落开头缩进问题
 ## [[2026-03-08]]latex公式模块化处理的可能性?
+## [[2026-03-30]]当.md 文件数量增多后，首次从 Blog 主页进入分类页会出现明显的 UI 冻结（卡顿），URL 已跳转但页面渲染滞后，跟sidebar和blogData有关。

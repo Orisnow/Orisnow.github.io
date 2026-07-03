@@ -5,7 +5,7 @@ import { container } from '@mdit/plugin-container'
 
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { setupImageRenderer, setupWhisperRenderer, setupSectionRenderer, setupFootnoteInline } from './theme/utils/Md-Vue/renderer.mts';
+import { setupImageRenderer,setupImageGroupRenderer, setupWhisperRenderer, setupSectionRenderer, setupFootnoteInline } from './theme/utils/Md-Vue/renderer.mts';
 import { setupEmoji } from './theme/utils/emoji.mts';
 
 export default defineConfig({
@@ -33,6 +33,7 @@ export default defineConfig({
         logger: () => "ignore" 
       });
       setupImageRenderer(md);
+      setupImageGroupRenderer(md);
       setupWhisperRenderer(md);
       setupSectionRenderer(md);
       setupFootnoteInline(md);

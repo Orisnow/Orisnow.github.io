@@ -15,9 +15,9 @@ tags:
 最基本的振动方式是简谐振动，最简单的例子是弹簧振子，考虑一维情景下作用在质点上的弹性力，有：
 $$
 \begin{align}
-  F=-kx \nonumber\\
-  \Rightarrow m \ddot{x}=-kx \nonumber\\
-  \Rightarrow x=A e^{j \omega t} \nonumber\\
+  & \qquad\; F=-kx \nonumber\\
+  &\Rightarrow m \ddot{x}=-kx \nonumber\\
+  &\Rightarrow \;\;\; x=C_1 e^{j \omega t}+C_2 e^{-j \omega t} \nonumber\\
 \end{align} 
 $$
-其中 $A$ 为常数，$\omega=\sqrt{k/m}$
+其中 $C_1 C_2$ 为复常数，$\omega=\sqrt{k/m}$
