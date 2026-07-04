@@ -132,7 +132,8 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 # 2026-07-03
 ## 1、修了下关于图片和图片组显示和自动提取元数据的问题
 # 2026-07-04
-## 1、修复katex+chrome+sarasa fonts联合导致的卡顿问题
+## 1、改善了katex+chrome+sarasa fonts联合导致的卡顿问题
+
 
 
 
@@ -151,3 +152,6 @@ export const **Config: LocaleSpecificConfig<DefaultTheme.Config> = {
 ## [[2026-02-25]]用UI Hijacking模拟图片大小组切换
 ## [[2026-03-01]]段落开头缩进问题
 ## [[2026-03-08]]latex公式模块化处理的可能性?
+## [[2026-03-30]]当.md 文件数量增多后，首次从 Blog 主页进入分类页会出现明显的 UI 冻结（卡顿），URL 已跳转但页面渲染滞后，可能跟sidebar和blogData有关。
+## [[2026-07-03]]卡顿的原因有一部分来源于公式，涉及@import 'katex/dist/katex.css';目前没什么好办法，想到的解决方案有预加载+加载动画界面
+## [[2026-07-04]]通过在base.css里把 CJK fallback graph 从 KaTeX 渲染链路里踢出去削减渲染时间由6s+至1.7s，在不更改google字体的情况下可能还是得上加载动画

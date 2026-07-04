@@ -16,7 +16,7 @@ tags:
   -1417704659162122124
 </span>进入世界，并输入指令<code class="inline-code">\tp -2286 56 8301</code>查看
 
-![神秘错位船](/blog/essays/MCAA/misaligned_shipwreck.png)
+![神秘错位船](/blog/essays/my_first_MCAA/misaligned_shipwreck.png)
 
 
 <script setup>
