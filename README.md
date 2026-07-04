@@ -2,7 +2,7 @@
 
 ```bash
 git add .
-git commit -m "fix: resolve chromium font fallback deadlock for sarasa"
+git commit -m "add:A complete blog post named namedmy_first_MCAA"
 git push  
 <!-- 直接push容易有连接问题，可以通过SSH key解决 -->
 ```
