@@ -1,75 +1,93 @@
 import type Token from 'markdown-it/lib/token.mjs'; 
 import { getImageMetadata } from './plugins/image_processor.mts';
-import type { MarkdownRenderer } from 'vitepress';
 import crypto from 'node:crypto';
+import type { MarkdownRenderer } from 'vitepress'
 
-
-// 自动为 H2 标题之间的内容套上 SectionGroup 折叠组件
 export const setupSectionRenderer = (md: MarkdownRenderer) => {
-    // --- 1. 渲染规则保持原样（仅负责字符串拼接） ---
-    md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
-    if (tokens[idx].tag === 'h2') {
-      // 1. 获取 VitePress 自动生成的 id
-      const h2Id = tokens[idx].attrGet('id') || '';
-      // 2. 将这个 id 存入 env，供本页后续组件使用
-      env.currentH2Id = h2Id; 
+  // 初始化或者跨页清理
+  md.core.ruler.before('block', 'section_init', (state) => {
+    state.env.__openLevels = { h2: false, h3: false, h4: false };
+  });
+
+  md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+    const tag = tokens[idx].tag as 'h2' | 'h3' | 'h4';
+    
+    if (['h2', 'h3', 'h4'].includes(tag)) {
+      // 保持你原有的 id 逻辑
+      env.currentH2Id = tokens[idx].attrGet('id') || ''; 
+
+      let prefix = '';
+      
+      // 核心嵌套闭合逻辑：
+      // 1. 如果遇到新的 H2，必须把之前开着的 h4, h3, h2 全关了
+      // 2. 如果遇到新的 H3，必须把之前开着的 h4, h3 全关了（保留 h2，实现嵌套）
+      // 3. 如果遇到新的 H4，只关之前开着的 h4
+      if (tag === 'h2') {
+        if (env.__openLevels.h4) { prefix += `</template></SectionGroup>\n`; env.__openLevels.h4 = false; }
+        if (env.__openLevels.h3) { prefix += `</template></SectionGroup>\n`; env.__openLevels.h3 = false; }
+        if (env.__openLevels.h2) { prefix += `</template></SectionGroup>\n`; env.__openLevels.h2 = false; }
+        env.__openLevels.h2 = true;
+      } else if (tag === 'h3') {
+        if (env.__openLevels.h4) { prefix += `</template></SectionGroup>\n`; env.__openLevels.h4 = false; }
+        if (env.__openLevels.h3) { prefix += `</template></SectionGroup>\n`; env.__openLevels.h3 = false; }
+        env.__openLevels.h3 = true;
+      } else if (tag === 'h4') {
+        if (env.__openLevels.h4) { prefix += `</template></SectionGroup>\n`; env.__openLevels.h4 = false; }
+        env.__openLevels.h4 = true;
+      }
 
       const defaultOpen = self.renderToken(tokens, idx, options);
-      let prefix = env.__isSectionCurrentlyOpen ? `</template></SectionGroup>\n` : '';
-      env.__isSectionCurrentlyOpen = true; 
-      
-      return `${prefix}<SectionGroup class="section-group"><template #title>${defaultOpen}`;
+      return `${prefix}<SectionGroup class="section-group level-${tag}"><template #title>${defaultOpen}`;
     }
     return self.renderToken(tokens, idx, options);
   };
 
   md.renderer.rules.heading_close = (tokens, idx, options, env, self) => {
-    if (tokens[idx].tag === 'h2') {
+    if (['h2', 'h3', 'h4'].includes(tokens[idx].tag)) {
       return `${self.renderToken(tokens, idx, options)}</template><template #content>\n`;
     }
     return self.renderToken(tokens, idx, options);
   };
 
-  // 在你的 setupSectionRenderer 或对应的配置函数中添加
+  // 保持你原有的 list_item_open 逻辑不动
   md.renderer.rules.list_item_open = (tokens, idx, options, env, self) => {
-    // 1. 拿到紧跟在 list_item_open 之后的 inline token (内容)
     const contentToken = tokens[idx + 2]; 
-    const content = contentToken?.content || "";
-
-    // 2. 正则匹配开头的 [1] 或 [12]
-    const match = content.match(/^\[(\d+)\]/);
-    
+    const match = (contentToken?.content || "").match(/^\[(\d+)\]/);
     if (match) {
-      const num = match[1];
-      const ns = env.currentH2Id || 'default';
-      // 3. 注入 id，格式为 ref-曲线-切向量-1
-      return `<li id="ref-${ns}-${num}">`;
+      return `<li id="ref-${env.currentH2Id || 'default'}-${match[1]}">`;
     }
-
-    // 如果没匹配到，返回默认的 <li>
     return self.renderToken(tokens, idx, options);
   };
 
-  // --- 2. 核心：解析阶段的物理闭环 ---
+  // 解析阶段的物理总闸闭合
   md.core.ruler.push('section_closer', (state) => {
     const tokens = state.tokens;
-    
-    // 物理检查：本页到底有没有 h2？
-    // 这是在解析阶段最稳的判断方式，不依赖任何渲染状态
-    const hasH2 = tokens.some(t => t.type === 'heading_open' && t.tag === 'h2');
+    const hasTargetHeading = tokens.some(t => t.type === 'heading_open' && ['h2', 'h3', 'h4'].includes(t.tag));
 
-    if (hasH2) {
-      // 只有确定有 h2，才补上总闸
-      const closeToken = new state.Token('html_block', '', 0);
-      closeToken.content = `</template></SectionGroup>`;
-      tokens.push(closeToken);
+    if (hasTargetHeading) {
+      // 在文章最后，用一个临时的 html_block，根据在 core 阶段能扫到的标题最大深度来安全闭合。
+      // 最稳妥的不硬编码方案：因为渲染期我们会通过 env 知道开了几个。
+      // 为了在 core 期做到物理闭环，我们通过扫描 token 树，看这篇 md “最终停留在什么级别”
+      let finalH2 = false, finalH3 = false, finalH4 = false;
+      for (const t of tokens) {
+        if (t.type === 'heading_open') {
+          if (t.tag === 'h2') { finalH2 = true; finalH3 = false; finalH4 = false; }
+          if (t.tag === 'h3') { finalH3 = true; finalH4 = false; }
+          if (t.tag === 'h4') { finalH4 = true; }
+        }
+      }
+      
+      let closeTags = '';
+      if (finalH4) closeTags += `</template></SectionGroup>`;
+      if (finalH3) closeTags += `</template></SectionGroup>`;
+      if (finalH2) closeTags += `</template></SectionGroup>`;
+
+      if (closeTags) {
+        const closeToken = new state.Token('html_block', '', 0);
+        closeToken.content = closeTags;
+        tokens.push(closeToken);
+      }
     }
-  });
-
-  // --- 3. 解决 GPT 提到的“跨页污染” ---
-  // 确保每一页开始前，渲染器的状态是干净的
-  md.core.ruler.before('block', 'section_init', (state) => {
-    state.env.__isSectionCurrentlyOpen = false;
   });
 };
 

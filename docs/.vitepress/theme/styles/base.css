@@ -55,7 +55,5 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 把 CJK fallback graph 从 KaTeX 渲染链路里踢出去 */
-.katex *, .katex-display * {
-  font-family: KaTeX_Main, KaTeX_Math, "Microsoft YaHei", sans-serif !important;
-}
+
+

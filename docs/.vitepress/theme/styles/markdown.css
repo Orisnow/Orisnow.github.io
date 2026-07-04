@@ -40,3 +40,48 @@ li[id^="ref-"] {
   /* 如果你的字体库 font.css 支持，可以指定更厚重的无衬线字体 */
   font-family: "Inter", "Helvetica", "Arial", sans-serif; 
 }
+
+/* ==========================================
+   全列表实心圆（自定义伪元素）绝对居中规范
+   ========================================== */
+
+.markdown-body ul {
+  /* 1. 彻底禁用浏览器自带的流氓圆点 */
+  list-style-type: none !important; 
+  /* 2. 把绿块（padding-left）锁死在一个汉字的宽度 */
+  padding-left: 1.02em !important; 
+  margin-left: 0 !important;
+}
+
+/* 统一为所有列表项（li）开启定位，用来当做圆点的绝对定位基准 */
+.markdown-body ul li {
+  position: relative;
+}
+
+/* 3. 用伪元素在全局第一层 ul 的 li 里面无中生有画一个圆点 */
+.markdown-body ul li::before {
+  content: "";
+  position: absolute;
+  /* 核心物理公式：
+     由于父级 li 的左侧边缘就是绿块的右侧，
+     我们需要把它往左边“轰”回去绿块的一半距离。
+     假设圆点直径 6px，绿块宽 1.1em（约 17.6px），
+     left 计算公式： - (1.1em / 2) - (6px / 2) 约为 -0.7em
+  */
+  left: -0.68em; 
+  top: 50%;
+  transform: translateY(-50%);
+  
+  /* 制造一个完美的实心小圆点 */
+  width: 5px;
+  height: 5px;
+  background-color: currentColor; /* 颜色自动跟随文本颜色 */
+  border-radius: 50%;
+}
+
+/* 保证多级嵌套时的缩进依然正常运作 */
+.markdown-body ul ul {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  padding-left: 1.1em !important; /* 每进一层老老实实向右推进一个汉字宽度 */
+}

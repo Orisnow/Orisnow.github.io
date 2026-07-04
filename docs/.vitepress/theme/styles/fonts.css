@@ -8,7 +8,8 @@
 
 
 :root {
-  --font-sans: "SarasaGothicSC-SemiBold", 
-                sans-serif;
+  /* 去掉最后的 sans-serif，换成 sans-serif-stub。
+     这样即便找不到，浏览器也会在本地系统字体（微软雅黑/苹方）原地死心，绝不回头去翻你的浏览器设置！ */
+  --font-sans: "SarasaGothicSC-SemiBold", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif-stub;
 }
 

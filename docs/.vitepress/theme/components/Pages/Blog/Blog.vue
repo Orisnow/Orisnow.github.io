@@ -170,4 +170,6 @@ const isCategoryPage = computed(() => {
     display: none;
   } 
 }
+
+
 </style>

@@ -76,10 +76,13 @@ watch(() => hash, () => checkHash());
   position: relative;
 }
 
-.section-header :deep(h2) {
+.section-header :deep(h2),
+.section-header :deep(h3),
+.section-header :deep(h4) {
   margin: 0 !important;
   border: none !important;
   padding: 0.5rem 0 !important;
+  display: inline-block; /* 确保表现一致 */
 }
 
 .arrow-icon {
@@ -124,4 +127,21 @@ watch(() => hash, () => checkHash());
   /* 解决内部 margin 塌陷导致的动画抖动 */
   padding: 1px 0; 
 }
+
+.section-body {
+  /* 确保在非折叠状态下，无论 JS 怎么算错，它都能通过纯 CSS 正常展开流式布局 */
+  max-height: max-content !important; 
+  overflow: visible; /* 绝不允许嵌套时把子组件的箭头给裁掉 */
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 只有在真正折叠的类名生效时，才用 0 和 hidden 掐断 */
+.is-collapsed .section-body {
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+
 </style>
