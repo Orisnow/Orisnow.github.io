@@ -177,10 +177,10 @@ export const setupWhisperRenderer = (md: any) => {
     const protectedBlocks: string[] = [];
     let content = src;
 
-    // 🚀 1. 全量超级保护区：
-    // 保护标准图片、Markdown 代码块 (```)、行内代码 (` )、以及所有的 Vue 脚本和样式块
-    // 这样能确保元数据、脚本代码里面的 () 绝对不会被 Whisper 误伤
-    const protectRegex = /(!\[[^\]]*\]\([^)]+\)|```[\s\S]*?```|`[^`]+`|<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>)/g;
+    // 🚀 1. 全量超级保护区（修正版）：
+    // 强行加入 \$\$[\s\S]*?\$\$ (块级公式) 和 \$(?!\s)([^\$\n]+?)(?<!\s)\$ (行内公式)
+    // 确保任何 LaTeX 公式内部的 () 绝对不会被 Whisper 误伤，同时也保护公式不被拆碎
+    const protectRegex = /(<math[\s\S]*?<\/math>|\$\$[\s\S]*?\$\$|\$(?!\s)[^\$\n]+?(?<!\s)\$|!\[[^\]]*\]\([^)]+\)|```[\s\S]*?```|`[^`]+`|<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>)/g;
     
     content = content.replace(protectRegex, (match) => {
       const id = protectedBlocks.length;
@@ -200,7 +200,7 @@ export const setupWhisperRenderer = (md: any) => {
       return `<Whisper>${p1}</Whisper>`;
     });
 
-    // 4. 转换一切完毕后，将保护区里的图片、代码、脚本原封不动、毫发无损地还原回去
+    // 4. 转换一切完毕后，将所有公式、代码、脚本原封不动、毫发无损地还原回去
     content = content.replace(/@@@SYSTEM_PROTECTED_(\d+)@@@/g, (_match, id) => {
       return protectedBlocks[parseInt(id)];
     });

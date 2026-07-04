@@ -1,9 +1,11 @@
-@import 'katex/dist/katex.css';
+@import 'katex/dist/katex.min.css';
 @import "./fancybox.css";
 @import './fonts.css';
 @import './color.css';
 @import './layout.css';
 @import './markdown.css';
+
+
 
 /* 全局样式重置 */
 html {
@@ -51,4 +53,24 @@ table {
 /* 全局平滑滚动 */
 html {
   scroll-behavior: smooth;
+}
+
+/* 彻底拆除 Chromium + Sarasa 的死锁公式 */
+.katex, .katex-display, .markdown-body {
+  font-family: 
+    KaTeX_Main, KaTeX_Math, KaTeX_Size1, KaTeX_Size2, 
+    /* 1. 先用专属公式字体 */
+    
+    -apple-system, BlinkMacSystemFont, 
+    /* 2. 苹果系统安全字体 */
+    
+    "Segoe UI", Roboto, Helvetica, Arial, 
+    /* 3. 现代全平台标准无衬线字体 */
+    
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 
+    /* 4. 强行指定系统自带的、轻量标准的中文衬线字体进行兜底 */
+    
+    sans-serif !important; 
+    /* 5. 最后的通用族，但前面已经被微软雅黑等硬编码字体拦截，
+       Chrome 再也没有机会去调用你系统默认设置的更纱黑体了 */
 }

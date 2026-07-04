@@ -1,0 +1,1 @@
+import{_ as e,c as a,e as s}from"./chunks/framework.BtRaMIly.js";const l=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"ja/blog/essays/index.md","filePath":"ja/blog/essays/index.md"}'),t={name:"ja/blog/essays/index.md"};function n(o,r,c,d,i,p){return s(),a("div")}const m=e(t,[["render",n]]);export{l as __pageData,m as default};
